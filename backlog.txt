@@ -1,1 +1,28 @@
-TODO
+1
+- Natural language question input
+- Corpus
+- Query result page for natural language question
+
+2
+- Case/judge/topic report input
+- Train corpus
+- Result page for generated report
+
+3
+- User login
+  - Database schema
+- Pretty splash page
+- Pricing/FAQ page
+- Fancy logo/design
+
+4
+- History
+  - save documents
+  - recent queries
+  - allow users to sort the above by case
+
+5
+- Mobile app client
+
+6
+- Speech to text queries
