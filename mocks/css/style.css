@@ -1482,9 +1482,8 @@ section * {
 }
 .header-11-sub .background {
   background-image: url("../img/laptop.jpg");
-  opacity: 80;
   filter: alpha(opacity=8000);
-  opacity: 0.8;
+  opacity: 0.7;
   filter: alpha(opacity=80);
 }
 @media (max-width: 767px) {
