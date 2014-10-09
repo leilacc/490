@@ -1544,3 +1544,21 @@ section * {
   text-align: center;
   margin-bottom: 55px;
 }
+#results {
+  margin-top: 40px;
+}
+.result {
+  margin-top: 20px;
+}
+.result-title a {
+  font-weight: bold;
+  font-size: 20px;
+}
+.result-answer {
+  color: #7f8c8d;
+  font-size: 18px;
+}
+.result-bookmark {
+  color: #444;
+  float: right;
+}
