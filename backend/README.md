@@ -19,5 +19,5 @@ Watson a bunch to get updated responses and logs them out.
 TODO
 =======
 
-[ ] Update to use sockets so response from Watson can be emitted to client.
-[ ] Endpoint for querying specific case/judge/topic.
+[] Update to use sockets so response from Watson can be emitted to client.
+[] Endpoint for querying specific case/judge/topic.
