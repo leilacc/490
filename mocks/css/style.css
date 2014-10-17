@@ -345,6 +345,7 @@ body {
 }
 li {
   line-height: 20px;
+  margin-bottom: 10px;
 }
 .btn {
   -webkit-border-radius: 6px;
@@ -366,6 +367,12 @@ li {
   line-height: inherit;
   display: inline-block;
   vertical-align: top;
+}
+.input-group {
+  margin-bottom: 10px;
+}
+.input-group-addon {
+  min-width: 70px;
 }
 .input-group-btn .btn {
   background: #bdc3c7;
@@ -939,13 +946,13 @@ section * {
   margin-top: 36px;
 }
 .header-11-sub {
-  padding-top: 110px;
+  padding-top: 70px;
   padding-bottom: 110px;
   color: #bdc3c7;
   position: relative;
 }
 .header-11-sub h3 {
-  font-size: 33px;
+  font-size: 36px;
   font-weight: normal;
   color: #ffffff;
   margin-bottom: 15px;
@@ -1497,7 +1504,7 @@ section * {
   color: #2c3e50;
 }
 .header-11-sub p {
-  color: #7f8c8d;
+  color:  #566573;
 }
 .header-11-sub .additional-links {
   color: #7f8c8d;
@@ -1558,7 +1565,14 @@ section * {
   color: #7f8c8d;
   font-size: 18px;
 }
-.result-bookmark {
+.result-thumb-tack {
   color: #444;
   float: right;
+}
+span.res_link {
+  font-size: 14px;
+  font-style: italic;
+}
+.panel {
+  margin-top: 25px;
 }
