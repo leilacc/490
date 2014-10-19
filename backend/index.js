@@ -3,8 +3,28 @@ var app = express();
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var path = require('path');
 
 var watson = require('./watson.js');
+
+// Routing
+app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, '../views'));
+app.set('css', path.join(__dirname, '../public/css'));
+app.set('view engine', 'jade');
+app.use(express.static(path.join(__dirname, 'public'))); // use html files in test subdir
+
+app.get('/', function (req, res) {
+  res.render('index');
+});
+
+app.get('/search', function (req, res) {
+  res.render('search');
+});
+
+app.get('/report', function (req, res) {
+  res.render('report');
+});
 
 var askQuestion = function(question, socket) {
     var numAnswersReceived = 0;
