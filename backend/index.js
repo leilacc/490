@@ -1,39 +1,79 @@
 var express = require('express');
-var watson = require('./watson.js');
 var app = express();
 
-var print = console.log;
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-app.get('/ask', function (req, res) {
-    question = req.query.question;
+var watson = require('./watson.js');
 
-    watson.askAndPoll(req.query.question, 20, 2000, function(error, watsonResponse) {
+var askQuestion = function(question, socket) {
+    var numAnswersReceived = 0;
+    watson.askAndPoll(question, 10, 2000, function(error, watsonResponse) {
         if (error) {
-            res.status(500).send({error: "Watson blew up"});
+            socket.emit("error", {error: error});
             return;
         }
 
-        print(watsonResponse.question);
+        var answers = watsonResponse.question.answers;
+        var newNumAnswers = Object.keys(answers).length;
+
+        if (newNumAnswers > numAnswersReceived) {
+            socket.emit("new answers", answers);
+            numAnswersReceived = newNumAnswers;
+        }
     });
-})
+}
 
-var server = app.listen(3000, function () {
-  var host = server.address().address
-  var port = server.address().port
+var createQuestionFromQuery = function(query) {
+    var judge = query.judge;
+    var issue = query.issue;
+    var previous_case = query.case;
 
-  console.log('listening at http://%s:%s', host, port);
+    if (judge && issue && previous_case) {
+        return "What did " + judge + " think about " + issue + " in " + previous_case + "?";
+    }
+
+    if (judge && issue) {
+        return "What does " + judge + " think about " + issue + "?";
+    }
+
+    if (issue && previous_case) {
+        return "What was the precedent for " + issue + " in " + previous_case + "?";
+    }
+
+    if (judge && previous_case) {
+        return "What was the decision of " + judge + " in " + previous_case + "?";
+    }
+
+    if (issue) {
+        return "What is the precedent for " + issue + "?";
+    }
+
+    if (judge) {
+        return "What are the previous decisions of " + judge + "?";
+    }
+
+    if (previous_case) {
+        return "What was the decision in " + previous_case + "?";
+    }
+}
+
+var queryCase = function(query, socket) {
+    askQuestion(createQuestionFromQuery(query), socket);
+}
+
+io.on('connection', function(socket) {
+    console.log('a user connected');
+      
+    socket.on("ask question", function(q) { 
+        askQuestion(q, socket);
+    });
+
+    socket.on("query case", function(q) {
+        queryCase(q, socket);
+    });
 });
 
-/*
-(def answer-body (j/read-str (:body get-result)))
-
-(def answer-question (get answer-body "question"))
-(keys answer-question)
-
-(def evidence (get answer-question "evidenceRequest"))
-(prn evidence)
-(def answers (get answer-question "answers"))
-(prn answers)
-(get answer-question "items")
-(get answer-question "pipelineid")
-*/
+http.listen(3000, function () {
+    console.log('listening at http://localhost:3000');
+});

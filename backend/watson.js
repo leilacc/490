@@ -27,7 +27,6 @@ var askAgainAfterDelay = function(body, delay, callback) {
     setTimeout(function() {
         params.url = requestURL(body.question.links.self);
         params.body = undefined;
-        console.log("Url is " + params.url);
 
         request(params, function(error, response, body) {
             callback(error, body);
@@ -42,8 +41,18 @@ var askAndPoll = function(question, numTimes, delay, callback) {
             return;
         }
 
-        for (var i = 0; i < numTimes; i++) {
-            askAgainAfterDelay(body, i * delay, callback);
+        var done = false;
+        for (var i = 0; !done && i < numTimes; i++) {
+            askAgainAfterDelay(body, i * delay, function(error, body) {
+                var status = body.question.status;
+                done = (status != "Queued");
+                
+                if (["Timeout", "Failed"].indexOf(status) != -1) {
+                    error = "Could not get answer to question.";
+                }
+
+                callback(error, body);
+            });
         }
     });
 }
