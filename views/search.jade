@@ -4,70 +4,20 @@ html
     title Libra Search
 body
   .page-wrapper
-    // header-11
-    header.header-11
-      .container
-        .row
-          .navbar.col-sm-12(role='navigation')
-            .navbar-header
-              button.navbar-toggle(type='button')
-              a.brand(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#')
-                img(src='img/logo@2x.png', width='50', height='50', alt='')
-                | OmniCase
-            .collapse.navbar-collapse.pull-right
-              ul.nav.pull-left
-                li
-                  a(href='')
-                    | TORYS LLP
-                li
-                  a(href='')
-                    | YANA DAVIS
-                li
-                  a(href='')
-                    | SAVED CASES
-                li
-                  a(href='')
-                    i.fa.fa-sign-out.fa-lg
+    include topnav
     section.header-11-sub
       .container
         .row
           .col-lg-2
           .col-lg-8
-            .input-group
-              input.form-control(type='text', placeholder='What do you need to know?')
-              span.input-group-btn
-                button.btn.btn-default(type='button')
-                  | Search
-            // /input-group
+            form(action='/ask', method='post', name='question')
+              .input-group
+                input.form-control(type='text',
+                  placeholder='What do you need to know?')
+                span.input-group-btn
+                  button.btn.btn-default(type='submit')
+                    | Search
             #results
-              .result
-                span.result-thumb-tack
-                  a(href='')
-                    i.fa.fa-thumb-tack.fa-lg
-                .result-title
-                  a(href='')
-                    | Title of Result Document
-                .result-answer
-                  | This is the answer that Watson gives
-              .result
-                span.result-thumb-tack
-                  a(href='')
-                    i.fa.fa-thumb-tack.fa-lg
-                span.result-pushpin
-                  a(href='')
-                    i.fa.fa-pushpin.fa-lg
-                .result-title
-                  a(href='')
-                    | Another Title of Result Document
-                .result-answer
-                  | This is another answer that Watson gives
-            // /results
-    footer.footer-2.bg-midnight-blue
-      .container
-        nav.pull-left
-          ul
-            li.active
-              a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#')  
-  // Placed at the end of the document so the pages load faster
-  script(src='./index_files/jquery-1.10.2.min.js')
-
+              include search_result
+              include search_result
+  include scripts
