@@ -1,137 +1,130 @@
-.page-wrapper
-  // header-11
-  header.header-11
-    .container
-      .row
-        .navbar.col-sm-12(role='navigation')
-          .navbar-header
-            button.navbar-toggle(type='button')
-            a.brand(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#')
-              img(src='./index_files/logo@2x.png', width='50', height='50', alt='')
-              | OmniCase
-          .collapse.navbar-collapse.pull-right
-            ul.nav.pull-left
-              li
-                a(href='')
-                  | PRODUCT
-              li
-                a(href='')
-                  | PRICING
-              li
-                a(href='')
-                  | FAQ
-              li
-                a(href='')
-                  | CONTACT
-            form.navbar-form.pull-left
-              a.btn.btn-primary(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') SIGN IN
-  section.header-11-sub
-    .background
-    .container
-      .row
-        .col-sm-5
-          h3 Better, faster case research
-      .row(style='padding-bottom: 200px;')
-        .col-sm-4
-          p
-            | A search engine that actually understands your
-            | questions and finds the cases you really need.
-            | Powered by IBM Watson.
-          .signup-form
-            form
-              .form-group
-                button.btn.btn-block.btn-info(type='submit', style='width:\
-                200px;') Learn More
-  // logos
-  section.logos
-    .container
-      div
-        img(src='./index_files/mashable.png', alt='')
-      div
-        img(src='./index_files/guardian.png', alt='')
-      div
-        img(src='./index_files/forbes.png', alt='')
-      div
-        img(src='./index_files/red-bull.png', alt='')
-      div
-        img(src='./index_files/ny-times.png', alt='')
-  // price-1
-  section.price-1
-    .container
-      h3 Take a look to our Plans
-      p.lead
-        | This is a probably the best plans ever born
-      .row.plans
-        .col-sm-4
-          .plan
-            .title Starter
-            .price 19$/month
-            .description
-              | 10,000 messages
-              br
-              b unlimited
-              | data
-              br
-              b unlimited
-              | users
-              br
-              | first 10 day free
-            a.btn.disabled(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Your Current Plan
-        .col-sm-4
-          .plan
-            .title Professional
-            .price 39$/month
-            .description
-              | 10,000 messages
-              br
-              b unlimited
-              | data
-              br
-              b unlimited
-              | users
-              br
-              | first 30 day free
-            a.btn.btn-primary(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Change to this Plan
-            .ribbon NEW
-        .col-sm-4
-          .plan
-            .title Business
-            .price 59$/month
-            .description
-              | 10,000 messages
-              br
-              b unlimited
-              | data
-              br
-              b unlimited
-              | users
-              br
-              | first 100 day free
-            a.btn.btn-primary(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Change to this Plan
-  // content-13
-  // footer-2
-  footer.footer-2.bg-midnight-blue
-    .container
-      nav.pull-left
-        ul
-          li.active
-            a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Product
-          li
-            a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Pricing
-          li
-            a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') FAQ
-          li
-            a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Contact
-      .social-btns.pull-right
-        a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#')
-          .fui-vimeo
-          .fui-vimeo
-        a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#')
-          .fui-facebook
-          .fui-facebook
-        a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#')
-          .fui-twitter
-          .fui-twitter
-// Placed at the end of the document so the pages load faster
-script(src='./index_files/jquery-1.10.2.min.js')
-
+html
+  head
+    include head_links
+    title Libra
+body
+  .page-wrapper
+    // header-11
+    header.header-11
+      .container
+        .row
+          .navbar.col-sm-12(role='navigation')
+            .navbar-header
+              button.navbar-toggle(type='button')
+              a.brand(href='')
+                img(src='img/logo@2x.png', width='50', height='50', alt='')
+                | OmniCase
+            .collapse.navbar-collapse.pull-right
+              ul.nav.pull-left
+                li
+                  a(href='')
+                    | PRODUCT
+                li
+                  a(href='')
+                    | PRICING
+                li
+                  a(href='')
+                    | FAQ
+                li
+                  a(href='')
+                    | CONTACT
+              form.navbar-form.pull-left
+                a.btn.btn-primary(href='') SIGN IN
+    section.header-11-sub
+      .background
+      .container
+        .row
+          .col-sm-5
+            h3 Better, faster case research
+        .row(style='padding-bottom: 200px;')
+          .col-sm-4
+            p
+              | A search engine that actually understands your
+              | questions and finds the cases you really need.
+              | Powered by IBM Watson.
+            .signup-form
+              form
+                .form-group
+                  button.btn.btn-block.btn-info(type='submit', style='width:\
+                  200px;') Learn More
+    // logos
+    section.logos
+      .container
+    // price-1
+    section.price-1
+      .container
+        h3 Take a look to our Plans
+        p.lead
+          | This is a probably the best plans ever born
+        .row.plans
+          .col-sm-4
+            .plan
+              .title Starter
+              .price 19$/month
+              .description
+                | 10,000 messages
+                br
+                b unlimited
+                | data
+                br
+                b unlimited
+                | users
+                br
+                | first 10 day free
+              a.btn.disabled(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Your Current Plan
+          .col-sm-4
+            .plan
+              .title Professional
+              .price 39$/month
+              .description
+                | 10,000 messages
+                br
+                b unlimited
+                | data
+                br
+                b unlimited
+                | users
+                br
+                | first 30 day free
+              a.btn.btn-primary(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Change to this Plan
+              .ribbon NEW
+          .col-sm-4
+            .plan
+              .title Business
+              .price 59$/month
+              .description
+                | 10,000 messages
+                br
+                b unlimited
+                | data
+                br
+                b unlimited
+                | users
+                br
+                | first 100 day free
+              a.btn.btn-primary(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Change to this Plan
+    // content-13
+    // footer-2
+    footer.footer-2.bg-midnight-blue
+      .container
+        nav.pull-left
+          ul
+            li.active
+              a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Product
+            li
+              a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Pricing
+            li
+              a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') FAQ
+            li
+              a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#') Contact
+        .social-btns.pull-right
+          a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#')
+            .fui-vimeo
+            .fui-vimeo
+          a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#')
+            .fui-facebook
+            .fui-facebook
+          a(href='file:///Users/Leila/Downloads/startup-demo-master/Developer/samples/sample-03/index.html#')
+            .fui-twitter
+            .fui-twitter
+  include scripts
