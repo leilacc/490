@@ -3,30 +3,9 @@ var app = express();
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var path = require('path');
 
 var watson = require('./watson.js');
-
-
-// Routing
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('css', path.join(__dirname, 'public/css'));
-app.set('view engine', 'jade');
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', function (req, res) {
-  res.render('index');
-});
-
-app.get('/search', function (req, res) {
-  res.render('search');
-});
-
-app.get('/report', function (req, res) {
-  res.render('report');
-});
-
+require('./routing.js')(express, app);
 
 var askQuestion = function(question, socket) {
     console.log("Question is: " + question);
