@@ -7,6 +7,8 @@ var io = require('socket.io')(http);
 var watson = require('./watson.js');
 
 var askQuestion = function(question, socket) {
+    console.log("Question is: " + question);
+
     var numAnswersReceived = 0;
     watson.askAndPoll(question, 10, 2000, function(error, watsonResponse) {
         if (error) {
@@ -26,6 +28,9 @@ var askQuestion = function(question, socket) {
 
 var createQuestionFromQuery = function(query) {
     var judge = query.judge;
+    if (judge && judge.toLowerCase().indexOf("judge") == -1) {
+        judge = "Judge" + judge;
+    }
     var issue = query.issue;
     var previous_case = query.case;
 
