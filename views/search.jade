@@ -1,7 +1,7 @@
 html
   head
     include head_links
-    title Libra Search
+    title Lume Search
 body
   .page-wrapper
     include topnav
@@ -10,14 +10,15 @@ body
         .row
           .col-lg-2
           .col-lg-8
-            form(action='/ask', method='post', name='question')
-              .input-group
-                input.form-control(type='text',
-                  placeholder='What do you need to know?')
-                span.input-group-btn
-                  button.btn.btn-default(type='submit')
-                    | Search
+            .input-group
+              input.form-control(type='text', name='question',
+                placeholder='What do you need to know?')
+              span.input-group-btn
+                button.btn.btn-default(onclick='search()')
+                  | Search
             #results
               include search_result
               include search_result
   include scripts
+  script(src='/socket.io/socket.io.js')
+  script(src='js/question_socket.js')
