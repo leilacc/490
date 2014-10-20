@@ -1,7 +1,7 @@
-socket = io('http://localhost:3000');
+var socket = io('http://localhost:3000'),
+  results = $('#results');
 
 socket.on("new answers", function (answers) {
-  var results = $('#results');
   for(i = 0; i < answers.length; i++) { 
     results.append(gen_result('title', answers[i].text));
   }
@@ -18,6 +18,7 @@ var search = function() {
   }
 
   socket.emit("ask question", { "question": question });
+  results.empty();
 }
 
 var gen_result = function(title, answer) {
