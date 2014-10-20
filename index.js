@@ -8,8 +8,6 @@ var watson = require('./watson.js');
 require('./routing.js')(express, app);
 
 var askQuestion = function(question, socket) {
-    console.log("Question is: " + question);
-
     var numAnswersReceived = 0;
     watson.askAndPoll(question, 10, 2000, function(error, watsonResponse) {
         if (error) {
@@ -19,6 +17,11 @@ var askQuestion = function(question, socket) {
 
         var answers = watsonResponse.question.answers;
         var newNumAnswers = Object.keys(answers).length;
+
+        var evidence = watsonResponse.question.evidencelist;
+        for (var i = 0; i < answers.length; i++) {
+            answers[i]['evidence'] = evidence[i];
+        }
 
         if (newNumAnswers > numAnswersReceived) {
             socket.emit("new answers", answers);

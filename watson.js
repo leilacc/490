@@ -16,7 +16,12 @@ var requestURL = function(appended) {
 
 var ask = function(question, callback) {
     params.url = requestURL("/instance/507/deepqa/v1/question");
-    params.body = { question: { questionText: question } }
+    params.body = {
+        question: {
+            questionText: question,
+            evidenceRequest: { items: 1, profile: "YES" }
+        }
+    }
 
     request.post(params, function(error, request, body) {
         callback(error, body);
