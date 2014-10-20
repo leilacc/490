@@ -17,7 +17,7 @@ var search = function() {
       return;
   }
 
-  socket.emit("ask question", { "question": question });
+  socket.emit("ask question", question);
   results.empty();
 }
 

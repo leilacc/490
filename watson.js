@@ -16,7 +16,7 @@ var requestURL = function(appended) {
 
 var ask = function(question, callback) {
     params.url = requestURL("/instance/507/deepqa/v1/question");
-    params.body = { question: { questionText: "What is a strike?" } }
+    params.body = { question: { questionText: question } }
 
     request.post(params, function(error, request, body) {
         callback(error, body);
