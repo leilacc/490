@@ -17,6 +17,10 @@ socket.on("error", function(error) {
 });
 
 var show_answers = function(answers) {
+  if (typeof answers === 'undefined') {
+    search();
+    return;
+  }
   for(i = 0; i < answers.length; i++) { 
     results.append(gen_result(answers[i].evidence.title, answers[i].text));
   }
