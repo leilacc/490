@@ -16,7 +16,7 @@ var requestURL = function(appended) {
 
 var ask = function(question, callback) {
     params.url = requestURL("/instance/507/deepqa/v1/question");
-    params.body = { question: { questionText: "What is a strike?" } }
+    params.body = { question: { questionText: question } }
 
     request.post(params, function(error, request, body) {
         callback(error, body);
@@ -59,26 +59,3 @@ var askAndPoll = function(question, numTimes, delay, callback) {
 
 module.exports.ask = ask;
 module.exports.askAndPoll = askAndPoll;
-
-/*
-(def result (c/post (str api "instance/507/deepqa/v1/question")
-                    {:basic-auth ["ut_approver" "QiNy9MCE"]
-                     :body "{\"question\" : { \"questionText\" : \"What is a strike?\" } }"
-                     :content-type :json
-                     :socket-timeout 30000
-                     :conn-timeout 30000
-                     :accept :json}))
-
-(def body (j/read-str (:body result)))
-(def data (get body "question"))
-
-(def get-more-data-request (get-in data ["links" "self"]))
-
-(def get-result (c/get (str api get-more-data-request)
-                   {:basic-auth ["ut_approver" "QiNy9MCE"]
-                    :content-type :json
-                    :socket-timeout 30000
-                    :conn-timeout 30000
-                    :accept :json}))
-(get answer-question "synonymList")
-*/
