@@ -18,11 +18,6 @@ exports = module.exports = function(express, app){
     res.render('search');
   });
 
-  app.post('/ask', function (req, res) {
-    console.log(req);
-    askQuestion(question, socket);
-  });
-
   app.get('/report', function (req, res) {
     res.render('report');
   });
