@@ -1,20 +1,42 @@
-exports = module.exports = function(express, app){
-  var path = require('path');
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', path.join(__dirname, 'views'));
-  app.set('css', path.join(__dirname, 'public/css'));
-  app.set('view engine', 'jade');
-  app.use(express.static(path.join(__dirname, 'public')));
+var auth = require('./auth');
+var passport = require('passport');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
-  app.get('/', function (req, res) {
-    res.render('index');
-  });
+var views = {
+  '/': 'index',
+  '/search': 'search',
+  '/report': 'report',
+  '/login': 'login'
+};
 
-  app.get('/search', function (req, res) {
-    res.render('search');
-  });
+var renderOnGet = function(path, view, app) {
+    app.get(path, function(req, res) {
+        res.render(view);
+    });
+}
 
-  app.get('/report', function (req, res) {
-    res.render('report');
-  });
+exports = module.exports = function(express, app) {
+    var path = require('path');
+    app.set('port', process.env.PORT || 3000);
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('css', path.join(__dirname, 'public/css'));
+    app.set('view engine', 'jade');
+    app.use(express.static(path.join(__dirname, 'public')));
+
+    app.use(cookieParser());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+
+    app.use(session({ secret: 's00pers3kret', maxAge: 360*5 }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    for (var path in views) {
+        renderOnGet(path, views[path], app);
+    }
+
+    app.post('/login', auth.login);
+    app.get('/logout', auth.logout);
 }
