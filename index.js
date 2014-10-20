@@ -5,6 +5,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var watson = require('./watson.js');
+require('./routing.js')(express, app);
 
 var askQuestion = function(question, socket) {
     console.log("Question is: " + question);
