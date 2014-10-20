@@ -12,7 +12,7 @@ body
           .col-lg-8
             form
               .input-group
-                input.form-control(type='text', name='question',
+                input.form-control(type='text', id='question',
                   placeholder='What do you need to know?' autofocus)
                 span.input-group-btn
                   button.btn.btn-default(onclick='search(); return false;',
@@ -23,4 +23,5 @@ body
   include scripts
   script(src='/socket.io/socket.io.js')
   script(src='js/spin.js')
+  script(src='js/search_state.js')
   script(src='js/question_socket.js')
