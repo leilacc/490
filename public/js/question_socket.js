@@ -3,7 +3,7 @@ var socket = io('http://localhost:3000'),
 
 socket.on("new answers", function (answers) {
   for(i = 0; i < answers.length; i++) { 
-    results.append(gen_result('title', answers[i].text));
+    results.append(gen_result(answers[i].evidence.title, answers[i].text));
   }
 });
 
