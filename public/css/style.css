@@ -1551,6 +1551,9 @@ section * {
   text-align: center;
   margin-bottom: 55px;
 }
+#spinner {
+  padding-top: 80px;
+}
 #results {
   margin-top: 40px;
 }

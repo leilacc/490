@@ -1,26 +1,39 @@
-var socket = io('http://localhost:3000'),
-  results = $('#results');
+var socket = io('localhost:3000'),
+  results = $('#results'),
+  input = $("#question");
 
 socket.on("new answers", function (qa) {
-  var question = qa[question];
-  var answers = qa[answers];
-  for(i = 0; i < answers.length; i++) { 
-    results.append(gen_result(answers[i].evidence.title, answers[i].text));
-  }
+  var question = qa['question'];
+  var answers = qa['answers'];
+
+  pushNewQuestion(question, answers);
+  show_answers(answers);
+
+  spin_div.hide();
 });
 
 socket.on("error", function(error) {
     console.log("AN ERROR OCCURRED: " + error);
 });
 
+var show_answers = function(answers) {
+  for(i = 0; i < answers.length; i++) { 
+    results.append(gen_result(answers[i].evidence.title, answers[i].text));
+  }
+}
+
 var search = function() {
-  var question = $("input[name=question]")[0].value;
+  var question = input[0].value;
   if (question.length == 0) {
       return;
   }
 
   socket.emit("ask question", question);
+
+  spin_div.show();
+  input.blur();
   results.empty();
+  return false;
 }
 
 var gen_result = function(title, answer) {
