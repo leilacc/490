@@ -1,7 +1,8 @@
-var socket = io('http://localhost:3000'),
+var socket = io('http://104.131.251.143:3000'),
   results = $('#results');
 
 socket.on("new answers", function (answers) {
+  spin_div.hide();
   for(i = 0; i < answers.length; i++) { 
     results.append(gen_result(answers[i].evidence.title, answers[i].text));
   }
@@ -12,12 +13,16 @@ socket.on("error", function(error) {
 });
 
 var search = function() {
-  var question = $("input[name=question]")[0].value;
+  var input = $("input[name=question]");
+  var question = input[0].value;
   if (question.length == 0) {
       return;
   }
 
   socket.emit("ask question", question);
+
+  spin_div.show();
+  input.blur();
   results.empty();
 }
 

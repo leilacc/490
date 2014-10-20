@@ -18,7 +18,9 @@ body
                   button.btn.btn-default(onclick='search(); return false;',
                                          type='submit')
                     | Search
+            #spinner
             #results
   include scripts
   script(src='/socket.io/socket.io.js')
+  script(src='js/spin.js')
   script(src='js/question_socket.js')
