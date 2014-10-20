@@ -1,7 +1,9 @@
 var socket = io('http://localhost:3000'),
   results = $('#results');
 
-socket.on("new answers", function (answers) {
+socket.on("new answers", function (qa) {
+  var question = qa[question];
+  var answers = qa[answers];
   for(i = 0; i < answers.length; i++) { 
     results.append(gen_result(answers[i].evidence.title, answers[i].text));
   }
