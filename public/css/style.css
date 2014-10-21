@@ -1582,3 +1582,6 @@ span.res_link {
 button#search:hover {
   background-color: #48C9B0;
 }
+.fa-sign-out {
+  padding-top: 4px;
+}
