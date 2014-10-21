@@ -1,6 +1,7 @@
 var socket = io('localhost:3000'),
   results = $('#results'),
-  input = $("#question");
+  input = $("#question"),
+  search_btn = $("#search");
 
 socket.on("new answers", function (qa) {
   var question = qa['question'];
@@ -58,3 +59,11 @@ var gen_result = function(title, answer) {
           '</div>'
          );
 }
+
+// color animations
+input.blur(function() {
+    search_btn.animate({backgroundColor: "#bdc3c7"}, 100);
+});
+input.focus(function() {
+    search_btn.animate({backgroundColor: "#1abc9c"}, 50);
+});

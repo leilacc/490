@@ -1579,3 +1579,6 @@ span.res_link {
 .panel {
   margin-top: 25px;
 }
+button#search:hover {
+  background-color: #48C9B0;
+}
