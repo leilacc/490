@@ -24,7 +24,8 @@ var askQuestion = function(question, socket) {
         }
 
         if (newNumAnswers > numAnswersReceived) {
-            socket.emit("new answers", answers);
+            socket.emit("new answers",
+                        {question: question, answers: answers});
             numAnswersReceived = newNumAnswers;
         }
     });

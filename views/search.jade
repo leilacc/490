@@ -18,8 +18,9 @@ body
                 input.form-control(type='text', id='question',
                   placeholder='What do you need to know?' autofocus)
                 span.input-group-btn
-                  button.btn.btn-default(onclick='search(); return false;',
-                                         type='submit')
+                  button#search.btn.btn-default(
+                    onclick='search(); return false;',
+                    type='submit')
                     | Search
             #spinner
             #results

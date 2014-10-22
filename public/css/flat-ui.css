@@ -1572,6 +1572,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .input-group-btn:last-child > .btn {
   margin-left: -4px;
   border-left-width: 0;
+  background-color: #1abc9c;
 }
 .input-group-btn > .btn-default + .btn-default {
   border-left: 2px solid #bdc3c7;

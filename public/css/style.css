@@ -407,6 +407,7 @@ input[type="color"],
   outline: none;
 }
 .form-group {
+  font-size: 16px;
   margin-bottom: 10px;
 }
 label {
@@ -1578,4 +1579,27 @@ span.res_link {
 }
 .panel {
   margin-top: 25px;
+}
+button#search:hover {
+  background-color: #48C9B0;
+}
+button#login_btn:focus {
+  background-color: #1abc9c;
+}
+button#login_btn:hover {
+  background-color: #1abc9c;
+}
+.fa-sign-out {
+  padding-top: 4px;
+}
+div#login {
+  width: 100%;
+}
+button.btn-block {
+  font-size: 16px;
+  margin-top: 25px;
+  border-radius: 4px;
+}
+.loom-login.form-control:last-child {
+  border-radius: 4px;
 }

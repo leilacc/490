@@ -1,11 +1,16 @@
-var socket = io('http://104.131.251.143:3000'),
+var socket = io('localhost:3000'),
   results = $('#results'),
-  input = $("#question");
+  input = $("#question"),
+  search_btn = $("#search");
 
-socket.on("new answers", function (answers) {
-  spin_div.hide();
-  pushNewQuestion('question', answers);
+socket.on("new answers", function (qa) {
+  var question = qa['question'];
+  var answers = qa['answers'];
+
+  pushNewQuestion(question, answers);
   show_answers(answers);
+
+  spin_div.hide();
 });
 
 socket.on("error", function(error) {
@@ -13,6 +18,10 @@ socket.on("error", function(error) {
 });
 
 var show_answers = function(answers) {
+  if (typeof answers === 'undefined') {
+    search();
+    return;
+  }
   for(i = 0; i < answers.length; i++) { 
     results.append(gen_result(answers[i].evidence.title, answers[i].text));
   }
@@ -50,3 +59,11 @@ var gen_result = function(title, answer) {
           '</div>'
          );
 }
+
+// color animations
+input.blur(function() {
+    search_btn.animate({backgroundColor: "#bdc3c7"}, 100);
+});
+input.focus(function() {
+    search_btn.animate({backgroundColor: "#1abc9c"}, 50);
+});
