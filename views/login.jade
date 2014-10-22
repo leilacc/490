@@ -4,19 +4,23 @@ html
     title Login | Loom
 body
   .page-wrapper
-    include topnav
+    include toplogo
     section.header-11-sub
       .container
         .row
-          .col-lg-2
-          .col-lg-8
+          .col-lg-4
+          .col-lg-4
             form(action='/login', method='post')
-              div
-                label Username:
-                input(type='text', name='username')
-              div
-                label Password:
-                input(type='password', name='password')
-              div
-                input(type='submit', value='Log In')
+              .input-group#login
+                .form-group
+                    | Username
+                    input.form-control.loom-login(
+                      type='text', name='username', autofocus)
+                .form-group
+                    | Password
+                    input.form-control.loom-login(
+                      type='password', name='password')
+                button.btn.btn-default.btn-block#login_btn(
+                  type='submit')
+                  | Log in
   include scripts
