@@ -1572,6 +1572,7 @@ section * {
 .result-thumb-tack {
   color: #444;
   float: right;
+  padding-top: 6px;
 }
 span.res_link {
   font-size: 14px;
