@@ -5,7 +5,7 @@ var pushNewQuestion = function(question, answers) {
   stateObj[no_space_question] = answers;
   history.pushState(stateObj, question,
                     "/search?" + no_space_question);
-}
+};
 
 window.onload = function() {
   var no_space_prev_question = $(location).attr('search').substring(1);
@@ -15,7 +15,7 @@ window.onload = function() {
     input[0].value = prev_question; // show prev question
     search();
   }
-}
+};
 
 window.onpopstate = function() {
   var no_space_prev_question = $(location).attr('search').substring(1);
@@ -24,4 +24,4 @@ window.onpopstate = function() {
 
   var prev_question = no_space_prev_question.split('+').join(' ');
   input[0].value = prev_question; // show prev question
-}
+};

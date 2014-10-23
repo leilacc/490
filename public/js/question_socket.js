@@ -1,7 +1,7 @@
-var socket = io('localhost:3000'),
+var socket = io('104.131.251.143:3000'),
   results = $('#results'),
   input = $("#question"),
-  search_btn = $("#search");
+  search_btn = $("#search_btn");
 
 socket.on("new answers", function (qa) {
   var question = qa['question'];
@@ -25,7 +25,7 @@ var show_answers = function(answers) {
   for(i = 0; i < answers.length; i++) { 
     results.append(gen_result(answers[i].evidence.title, answers[i].text));
   }
-}
+};
 
 var search = function() {
   var question = input[0].value;
@@ -39,7 +39,7 @@ var search = function() {
   input.blur();
   results.empty();
   return false;
-}
+};
 
 var gen_result = function(title, answer) {
   return ('<div class="result">' + 
@@ -58,7 +58,7 @@ var gen_result = function(title, answer) {
             '</div>' + 
           '</div>'
          );
-}
+};
 
 // color animations
 input.blur(function() {
