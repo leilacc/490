@@ -1607,3 +1607,6 @@ button.btn-block {
 .loom-login.form-control:last-child {
   border-radius: 4px;
 }
+section.front-pic {
+  padding-bottom: 200px;
+}
