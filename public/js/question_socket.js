@@ -1,4 +1,4 @@
-var socket = io('localhost:3000'),
+var socket = io('http://loomlegal.com:3000'),
   results = $('#results'),
   input = $("#question"),
   search_btn = $("#search");

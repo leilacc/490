@@ -16,7 +16,8 @@ body
             form
               .input-group
                 input.form-control(type='text', id='question',
-                  placeholder='What do you need to know?' autofocus)
+                  placeholder='What do you need to know?', autofocus,
+                  autocomplete='off')
                 span.input-group-btn
                   button#search.btn.btn-default(
                     onclick='search(); return false;',
