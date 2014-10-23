@@ -13,7 +13,11 @@ var views = {
 
 var renderOnGet = function(path, view, app) {
     app.get(path, function(req, res) {
-        res.render(view);
+        vars = {};
+        if (req.user) {
+          vars['username'] = req.user.name.toUpperCase();
+        }
+        res.render(view, vars);
     });
 }
 
