@@ -19,14 +19,14 @@ body
                   placeholder='What do you need to know?', autofocus,
                   autocomplete='off')
                 span.input-group-btn
-                  button#search.btn.btn-default(
+                  button#search_btn.btn.btn-default(
                     onclick='search(); return false;',
                     type='submit')
-                    | Ask Watson
+                    | Ask
             #spinner
             #results
   include scripts
   script(src='/socket.io/socket.io.js')
   script(src='js/spin.js')
-  script(src='js/search_state.js')
   script(src='js/question_socket.js')
+  script(src='js/search_state.js')
