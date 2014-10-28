@@ -6,9 +6,10 @@ var session = require('express-session');
 
 var views = {
   '/': 'index',
+  '/login': 'login',
   '/search': 'search',
   '/report': 'report',
-  '/login': 'login'
+  '/cases': 'cases'
 };
 
 var renderOnGet = function(path, view, app) {
