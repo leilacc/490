@@ -8,7 +8,7 @@ socket.on("new answers", function (qa) {
   var answers = qa['answers'];
 
   pushNewQuestion(question, answers);
-  show_answers(answers);
+  show_answers(question, answers);
 
   spin_div.hide();
 });
@@ -17,14 +17,27 @@ socket.on("error", function(error) {
     console.log("AN ERROR OCCURRED: " + error);
 });
 
-var show_answers = function(answers) {
+var show_answers = function(question, answers) {
   if (typeof answers === 'undefined') {
     search();
     return;
   }
+
+  var question_obj = str_to_obj_of_words(question);
   for(i = 0; i < answers.length; i++) { 
-    results.append(gen_result(answers[i].evidence.title, answers[i].text));
+    results.append(gen_result(answers[i].evidence.title,
+                              highlighted_answer(answers[i].text,
+                                                 question_obj)));
   }
+};
+
+var str_to_obj_of_words = function(str) {
+  obj = {};
+  words = str.split(" ");
+  for (i = 0; i < words.length; i++) {
+    obj[words[i].toLowerCase()] = 1;
+  }
+  return obj;
 };
 
 var search = function() {
@@ -40,6 +53,22 @@ var search = function() {
   results.empty();
   return false;
 };
+
+var highlighted_answer = function(orig_answer, question) {
+  var words = orig_answer.split(" "),
+      new_answer = [];
+
+  for (i = 0; i < words.length; i++) {
+    var word = words[i].toLowerCase();
+    if ((word in question) && !(word in fwords)) {
+      new_answer.push("<strong>"+word+"</strong>");
+    } else {
+      new_answer.push(word);
+    }
+  }
+
+  return new_answer.join(" ");
+}
 
 var gen_result = function(title, answer) {
   return ('<div class="result">' + 

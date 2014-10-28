@@ -18,10 +18,11 @@ window.onload = function() {
 };
 
 window.onpopstate = function() {
-  var no_space_prev_question = $(location).attr('search').substring(1);
+  var no_space_prev_question = $(location).attr('search').substring(1),
+      prev_question = no_space_prev_question.split('+').join(' ');
   results.empty(); // get rid of other answers
-  show_answers(stateObj[no_space_prev_question]); // show prev answers
+  show_answers(prev_questions,
+               stateObj[no_space_prev_question]); // show prev answers
 
-  var prev_question = no_space_prev_question.split('+').join(' ');
   input[0].value = prev_question; // show prev question
 };
