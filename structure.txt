@@ -1,0 +1,38 @@
+[
+	{
+		name: "Test Question?",
+		last_updated: "12/05/14",
+
+		can_read: [1] // do we need this level of restriction at the question level? need more research
+		can_write: [1]
+
+		answers: [
+			{
+				added: "12/05/14"
+				... // Answer 1
+			},
+			{
+				added: "10/05/14"
+				... // Answer 2
+			}
+		]
+	},
+	{
+		name: "Folder1",
+		owner: 1 // user id
+
+		can_read: [1, 3, 7, ...] // users that can see the folder
+		can_write: [1, 3, ...] // users that can add things to the folder and change its name
+		
+		children: [
+			// Recursive
+		]
+	}
+]
+
+TODO:
+
+1. Are things grouped by user or kept in a big heap of stuff? Based on how
+collaborative the research process is.
+2. Do we restrict visibility at question-level or just at folder-level?
+3. 
