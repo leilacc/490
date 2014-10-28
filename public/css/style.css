@@ -1578,9 +1578,6 @@ span.res_link {
   font-size: 14px;
   font-style: italic;
 }
-.panel {
-  margin-top: 25px;
-}
 button#search {
   padding: 10px 18px;
 }
@@ -1609,4 +1606,10 @@ button.btn-block {
 }
 section.front-pic {
   padding-bottom: 200px;
+}
+a#new-folder {
+  float: right;
+}
+a.saved-q {
+  cursor: pointer;
 }
