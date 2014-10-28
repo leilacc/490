@@ -17,6 +17,10 @@ var renderOnGet = function(path, view, app) {
         vars = {};
         if (req.user) {
           vars['username'] = req.user.name.toUpperCase();
+          if (view == 'index') {
+              // redirect logged-in users to search page
+              view = 'search'
+          }
         }
         res.render(view, vars);
     });
