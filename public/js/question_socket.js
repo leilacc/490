@@ -24,7 +24,7 @@ var show_answers = function(question, answers) {
   }
 
   var question_obj = str_to_obj_of_words(question);
-  for(i = 0; i < answers.length; i++) { 
+  for(var i = 0; i < answers.length; i++) {
     results.append(gen_result(answers[i].evidence.title,
                               highlighted_answer(answers[i].text,
                                                  question_obj)));
@@ -34,7 +34,7 @@ var show_answers = function(question, answers) {
 var str_to_obj_of_words = function(str) {
   obj = {};
   words = str.split(" ");
-  for (i = 0; i < words.length; i++) {
+  for (var i = 0; i < words.length; i++) {
     obj[words[i].toLowerCase()] = 1;
   }
   return obj;
@@ -58,7 +58,7 @@ var highlighted_answer = function(orig_answer, question) {
   var words = orig_answer.split(" "),
       new_answer = [];
 
-  for (i = 0; i < words.length; i++) {
+  for (var i = 0; i < words.length; i++) {
     var word = words[i].toLowerCase();
     if ((word in question) && !(word in fwords)) {
       new_answer.push("<strong>"+word+"</strong>");
