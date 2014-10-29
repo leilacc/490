@@ -1553,10 +1553,10 @@ section * {
   margin-bottom: 55px;
 }
 #spinner {
-  padding-top: 80px;
+  padding-top: 140px;
 }
 #results {
-  margin-top: 40px;
+  margin-top: 10px;
 }
 .result {
   margin-top: 20px;
@@ -1569,11 +1569,21 @@ section * {
   color: #7f8c8d;
   font-size: 18px;
 }
-.result-thumb-tack {
-  color: #E54D42;
-  float: right;
-  margin-left: 10px;
+button.thumb-tack {
+  background-color: #fff;
+  float: left;
   padding-top: 6px;
+}
+button.thumb-tack:hover {
+  background-color: #fff;
+}
+.fa-thumb-tack {
+  color: #FDCDC6;
+  margin-top: 23px;
+  transition: color 0.15s ease;
+}
+.fa-thumb-tack:hover {
+  color: #EC6363;
 }
 span.res_link {
   font-size: 14px;

@@ -13,20 +13,28 @@ var show_answers = function(question, answers) {
 };
 
 var gen_result = function(title, answer) {
-  return ('<div class="result">' + 
-            '<span class="result-thumb-tack">' + 
-              '<a href="">' + 
-                '<i class="fa fa-thumb-tack fa-lg"></i>' +
-              '</a>' + 
-            '</span>' +
-            '<div class="result-title">' +
-              '<a href="">' +
-                title + 
-              '</a>' + 
+  return ('<div class="row">' +
+            '<div class="col-lg-2">' +
             '</div>' +
-            '<div class="result-answer">' +
-              answer +
-            '</div>' + 
+            '<div class="col-lg-8">' +
+              '<div class="result">' +
+                '<div class="result-title">' +
+                  '<a href="">' +
+                    title +
+                  '</a>' +
+                '</div>' +
+                '<div class="result-answer">' +
+                  answer +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="col-lg-2">' +
+              '<span class="result-thumb-tack">' +
+                '<button type="button" class="btn btn-default thumb-tack" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">' +
+                  '<i class="fa fa-thumb-tack fa-lg"></i>' +
+                  '</button>' +
+              '</span>' +
+            '</div>' +
           '</div>'
          );
 };
@@ -58,7 +66,5 @@ var str_to_obj_of_words = function(str) {
 };
 
 var standardize_word = function(word) {
-  console.log(word);
-  console.log(word.toLowerCase().split(/\W+/)[0]);
   return word.toLowerCase().split(/\W+/)[0];
 };
