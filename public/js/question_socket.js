@@ -32,9 +32,15 @@ var search = function() {
 };
 
 // color animations
-input.blur(function() {
-    search_btn.animate({backgroundColor: "#bdc3c7"}, 100);
-});
-input.focus(function() {
-    search_btn.animate({backgroundColor: "#1abc9c"}, 50);
-});
+var focus_color = "#1abc9c",
+    blur_color = "#bdc3c7";
+var searchbar_color_animation = function(color) {
+  return function() {
+    search_btn.animate({backgroundColor: color}, 1);
+    input.animate({borderColor: color}, 1);
+  };
+};
+input.hover(searchbar_color_animation(focus_color),
+            searchbar_color_animation(blur_color));
+search_btn.hover(searchbar_color_animation(focus_color),
+                 searchbar_color_animation(blur_color));

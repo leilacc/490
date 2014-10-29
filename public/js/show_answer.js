@@ -8,11 +8,27 @@ var show_answers = function(question, answers) {
   for(var i = 0; i < answers.length; i++) {
     results.append(gen_result(answers[i].evidence.title,
                               highlighted_answer(answers[i].text,
-                                                 question_obj)));
+                                                 question_obj),
+                              i));
+
+    var thumbtack = $('#thumbtack' + i);
+    //thumbtack.attr('data-content', get_popover_content(i));
+    thumbtack.clickover({
+      html: true,
+      global_close: true,
+      content: get_popover_content(i)
+    });
   }
 };
 
-var gen_result = function(title, answer) {
+var get_popover_content = function(id) {
+  return "<input type='text' class='new_folder' placeholder='New folder'>" +
+         "<a href=''>My Cases</a><br>" +
+         "<a href=''>Tercon</a><br>" +
+         "<a href=''>Knapp</a><br>";
+};
+
+var gen_result = function(title, answer, id) {
   return ('<div class="row">' +
             '<div class="col-lg-2">' +
             '</div>' +
@@ -30,9 +46,11 @@ var gen_result = function(title, answer) {
             '</div>' +
             '<div class="col-lg-2">' +
               '<span class="result-thumb-tack">' +
-                '<button type="button" class="btn btn-default thumb-tack" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">' +
+                '<a href="#" id="thumbtack' + id + '" rel="clickover" ' +
+             //       'data-content="' + get_popover_content(id) + '"' +
+                    'data-original-title="Save to...">' +
                   '<i class="fa fa-thumb-tack fa-lg"></i>' +
-                  '</button>' +
+                '</a>' +
               '</span>' +
             '</div>' +
           '</div>'

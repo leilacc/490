@@ -1571,6 +1571,7 @@ section * {
 }
 button.thumb-tack {
   background-color: #fff;
+  border: none;
   float: left;
   padding-top: 6px;
 }
@@ -1601,6 +1602,9 @@ button#login_btn:focus {
 button#login_btn:hover {
   background-color: #1abc9c;
 }
+button#search_btn:hover {
+  background-color: #48C9B0;
+}
 .fa-sign-out {
   padding-top: 4px;
 }
@@ -1623,4 +1627,12 @@ a#new-folder {
 }
 a.saved-q {
   cursor: pointer;
+}
+.popover {
+  float: left;
+  box-shadow: none;
+}
+h3.popover-title {
+  font-size: 14px;
+  margin-bottom: 0px;
 }
