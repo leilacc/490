@@ -1570,8 +1570,9 @@ section * {
   font-size: 18px;
 }
 .result-thumb-tack {
-  color: #444;
+  color: #E54D42;
   float: right;
+  margin-left: 10px;
   padding-top: 6px;
 }
 span.res_link {
