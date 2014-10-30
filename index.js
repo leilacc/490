@@ -3,7 +3,9 @@ var app = express();
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var request = require('request');
 
+var db = require('./db.js');
 var watson = require('./watson.js');
 require('./routing.js')(express, app);
 
@@ -21,6 +23,12 @@ var askQuestion = function(question, socket) {
         var evidence = watsonResponse.question.evidencelist;
         for (var i = 0; i < answers.length; i++) {
             answers[i]['evidence'] = evidence[i];
+            console.log(evidence[i]);
+
+            request(evidence[i].document, function(error, body) {
+                console.log("GOT ORIGINAL DOC");
+                console.log(body);
+            });
         }
 
         if (newNumAnswers > numAnswersReceived) {
@@ -86,4 +94,5 @@ io.on('connection', function(socket) {
 
 http.listen(3000, function () {
     console.log('listening at http://localhost:3000');
+    db.connect();
 });
