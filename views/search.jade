@@ -8,9 +8,6 @@ body
     section.header-11-sub
       .container
         .row
-          .col-lg-6
-            .spinner
-        .row
           .col-lg-2
           .col-lg-8
             form
@@ -24,9 +21,12 @@ body
                     type='submit')
                     | Ask
             #spinner
-            #results
+        #results
   include scripts
   script(src='/socket.io/socket.io.js')
+  script(src='js/bootstrapx-clickover.js')
   script(src='js/spin.js')
+  script(src='js/fwords.js')
+  script(src='js/show_answer.js')
   script(src='js/question_socket.js')
   script(src='js/search_state.js')

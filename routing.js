@@ -6,9 +6,10 @@ var session = require('express-session');
 
 var views = {
   '/': 'index',
+  '/login': 'login',
   '/search': 'search',
   '/report': 'report',
-  '/login': 'login'
+  '/cases': 'cases'
 };
 
 var renderOnGet = function(path, view, app) {
@@ -16,6 +17,10 @@ var renderOnGet = function(path, view, app) {
         vars = {};
         if (req.user) {
           vars['username'] = req.user.name.toUpperCase();
+          if (view == 'index') {
+              // redirect logged-in users to search page
+              view = 'search'
+          }
         }
         res.render(view, vars);
     });
