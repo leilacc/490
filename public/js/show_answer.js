@@ -12,20 +12,30 @@ var show_answers = function(question, answers) {
                               i));
 
     var thumbtack = $('#thumbtack' + i);
-    //thumbtack.attr('data-content', get_popover_content(i));
     thumbtack.clickover({
       html: true,
       global_close: true,
+      esc_close: true,
+      placement: 'bottom',
       content: get_popover_content(i)
     });
   }
 };
 
 var get_popover_content = function(id) {
-  return "<input type='text' class='new_folder' placeholder='New folder'>" +
-         "<a href=''>My Cases</a><br>" +
-         "<a href=''>Tercon</a><br>" +
-         "<a href=''>Knapp</a><br>";
+  return "<input type='text' class='new_folder' placeholder='New folder' autofocus='autofocus'>" +
+           "<span class='folder-link'>" +
+             "<a class='folder-link' data-dismiss='clickover' onclick='save_case(0, 0)'>My Cases</a>" +
+            "</span>" +
+           "<span class='folder-link'>" +
+             "<a class='folder-link' data-dismiss='clickover'>&nbsp&nbsp&nbspTercon</a>" +
+            "</span>" +
+           "<span class='folder-link'>" +
+             "<a class='folder-link' data-dismiss='clickover'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspHighway Act</a>" +
+            "</span>" +
+           "<span class='folder-link'>" +
+             "<a class='folder-link' data-dismiss='clickover'>&nbsp&nbsp&nbspKnapp</a>" +
+            "</span>";
 };
 
 var gen_result = function(title, answer, id) {
@@ -44,11 +54,9 @@ var gen_result = function(title, answer, id) {
                 '</div>' +
               '</div>' +
             '</div>' +
-            '<div class="col-lg-2">' +
+            '<div class="col-lg-2 pin-col">' +
               '<span class="result-thumb-tack">' +
-                '<a href="#" id="thumbtack' + id + '" rel="clickover" ' +
-             //       'data-content="' + get_popover_content(id) + '"' +
-                    'data-original-title="Save to...">' +
+                '<a href="#" id="thumbtack' + id + '" class="thumbtack" rel="clickover">' +
                   '<i class="fa fa-thumb-tack fa-lg"></i>' +
                 '</a>' +
               '</span>' +

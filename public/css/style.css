@@ -1580,10 +1580,13 @@ button.thumb-tack:hover {
 }
 .fa-thumb-tack {
   color: #FDCDC6;
-  margin-top: 23px;
+  margin-top: 27px;
   transition: color 0.15s ease;
 }
 .fa-thumb-tack:hover {
+  color: #EC6363;
+}
+.thumbtack-saved {
   color: #EC6363;
 }
 span.res_link {
@@ -1628,11 +1631,40 @@ a#new-folder {
 a.saved-q {
   cursor: pointer;
 }
+.popover-content {
+  padding: 9px 12px;
+}
 .popover {
+  display: block;
   float: left;
-  box-shadow: none;
+  background-color: #fdfdfd;
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
+  top: 40.09375px;
+  left: -1.5px;
+}
+.popover .arrow {
+  display: none;
 }
 h3.popover-title {
   font-size: 14px;
   margin-bottom: 0px;
+}
+input.new_folder {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 7px;
+  padding: 4px 6px;
+  font-size: 15px;
+}
+span.folder-link {
+  display: block;
+  padding-left: 7px;
+  padding-top: 4px;
+}
+a.folder-link {
+  cursor: pointer;
+  font-size: 15px;
+}
+.pin-col {
+  padding: 0px;
 }
