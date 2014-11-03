@@ -4,8 +4,8 @@ var API = "https://watson-wdc01.ihost.com";
 
 var params = {
     auth: {
-        user: "ut_approver",
-        pass: "QiNy9MCE"
+        user: "ut_student1",
+        pass: "Q72lSnoC"
     },
     json: true
 };

@@ -5,11 +5,16 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var request = require('request');
 
-var db = require('./db.js');
-var watson = require('./watson.js');
-require('./routing.js')(express, app);
+var db = require('./db');
+var pin = require('./pin');
+var watson = require('./watson');
+require('./routing')(express, app);
 
-var askQuestion = function(question, socket) {
+var askQuestion = function(data, socket) {
+    var question = data.question;
+    var userId = data.userId;
+    var currentPath = data.currentPath;
+
     var numAnswersReceived = 0;
     watson.askAndPoll(question, 10, 2000, function(error, watsonResponse) {
         if (error) {
@@ -23,17 +28,12 @@ var askQuestion = function(question, socket) {
         var evidence = watsonResponse.question.evidencelist;
         for (var i = 0; i < answers.length; i++) {
             answers[i]['evidence'] = evidence[i];
-            console.log(evidence[i]);
-
-            request(evidence[i].document, function(error, body) {
-                console.log("GOT ORIGINAL DOC");
-                console.log(body);
-            });
         }
 
         if (newNumAnswers > numAnswersReceived) {
             socket.emit("new answers",
                         {question: question, answers: answers});
+            db.createQuestion(question, answers, currentPath, userId);
             numAnswersReceived = newNumAnswers;
         }
     });
@@ -83,16 +83,26 @@ var queryCase = function(query, socket) {
 io.on('connection', function(socket) {
     console.log('a user connected');
       
-    socket.on("ask question", function(q) { 
-        askQuestion(q, socket);
+    socket.on("ask question", function(data) { 
+        askQuestion(data, socket);
     });
 
-    socket.on("query case", function(q) {
-        queryCase(q, socket);
+    socket.on("query case", function(query) {
+        queryCase(query, socket);
     });
+
+    socket.on("create folder", function(args) {
+        name = args.name;
+        path = args.path;
+        userId = args.userId;
+
+        db.createFolder(name, path, userId);
+    })
 });
 
 http.listen(3000, function () {
     console.log('listening at http://localhost:3000');
-    db.connect();
+    db.connect(function() {
+        console.log("Connected to the database");
+    });
 });
