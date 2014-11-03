@@ -10,6 +10,10 @@ socket.on("new answers", function (qa) {
   pushNewQuestion(question, answers);
   show_answers(question, answers);
 
+  $('#thumbtack0').click(function() {
+    $('#thumbtack0').css('color', '#EC6363');
+  });
+
   spin_div.hide();
 });
 
