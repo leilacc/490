@@ -42,7 +42,7 @@ exports = module.exports = function(express, app) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
-    app.use(session({ secret: 's00pers3kret', maxAge: 360*5 }));
+    app.use(session({ secret: 's00pers3kret', maxAge: 360*2000 }));
     app.use(passport.initialize());
     app.use(passport.session());
 
