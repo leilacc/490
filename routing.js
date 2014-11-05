@@ -62,7 +62,15 @@ var askQuestion = function(req, res) {
     var currentPath = req.param('currentPath');
     if (!currentPath)
         currentPath = []
-    var userId = req.user._id;
+
+    try {
+      var userId = req.user._id;
+    } catch (error) {
+      // if no user is logged in, redirect to login
+      if (error.name === 'TypeError') {
+        res.render('/login', {});
+      }
+    }
 
     var numAnswersReceived = 0;
     watson.askAndPoll(question, 10, 2000, function(error, watsonResponse) {
