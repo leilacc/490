@@ -4,15 +4,11 @@ var LocalStrategy = require('passport-local').Strategy;
 var db = require('./db');
 
 passport.serializeUser(function(user, done) {
-	console.log("serializeUser: " + user);
 	done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-	console.log("id: " + id);
 	db.getUser(id, function(err, user) {
-		console.log(err);
-		console.log("deserializeUser: " + user);
 		done(null, user);
 	});
 });

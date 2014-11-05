@@ -13,7 +13,8 @@ var views = {
   '/register': 'register',
   '/search': 'search',
   '/report': 'report',
-  '/cases': 'cases'
+  '/cases': 'cases',
+  '/history': 'history'
 };
 
 var renderOnGet = function(path, view, app) {
@@ -42,7 +43,7 @@ exports = module.exports = function(express, app) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
-    app.use(session({ secret: 's00pers3kret', maxAge: 360*2000 }));
+    app.use(session({ secret: 's00pers3kret', maxAge: 360*2000000 }));
     app.use(passport.initialize());
     app.use(passport.session());
 
@@ -51,12 +52,18 @@ exports = module.exports = function(express, app) {
     }
 
     app.post('/ask', askQuestion);
-    app.post('/register', auth.register);
+    app.post('/share', shareWithUser);
+
+    // this isn't really a GET, but I didn't want it to conflict with the
+    // view name.
+    app.post('/history', getHistory);
+
     app.post('/login', auth.login);
+    app.post('/register', auth.register);
     app.get('/logout', auth.logout);
 }
 
-// I couldn't find anywhere better to dump this. sorry.
+// I couldn't find anywhere better to dump these functions. sorry.
 var askQuestion = function(req, res) {
     var question = req.param('question');
     var currentPath = req.param('currentPath');
@@ -85,4 +92,22 @@ var askQuestion = function(req, res) {
             numAnswersReceived = newNumAnswers;
         }
     });
+}
+
+var getHistory = function(req, res) {
+    var userId = req.user._id;
+    db.getHistory(userId, function(err, history) {
+        res.json(history);
+    });
+}
+
+var shareWithUser = function(req, res) {
+    var userId = req.body.userId;
+    var canWrite = req.body.canWrite;
+    var pinId = req.body.pinId;
+
+    db.getPin(pinId, function(err, pin) {
+      pin.shareWithUser(userId, canWrite);
+      res.end();
+    })
 }

@@ -28,6 +28,7 @@ var createUser = function(name, username, password, callback) {
         owner: user.id,
         canRead: [user.id],
         canWrite: [user.id],
+        parent: null,
         depth: 0,
         children: []
     });
@@ -37,13 +38,40 @@ var createUser = function(name, username, password, callback) {
     });
 }
 
-var getUser = function(userId, callback) {
-    models.User.findOne({_id: userId}).exec(callback);
+var createQuestion = function(question, answers, folderPath, ownerId, callback) {
+    findPinForUser(folderPath, ownerId, function(err, folder) {
+        var questionObj = new models.QuestionPin({
+            name: question,
+            depth: folder.depth + 1,
+            answers: answers,
+
+            owner: ownerId,
+            parent: folder._id,
+            canRead: [ownerId],
+            canWrite: [ownerId],
+            
+            pins: []
+        });
+
+        folder.children.push(questionObj);
+
+        questionObj.save(function(err, _) {
+            folder.save(callback);
+        });
+    });
+};
+
+var modelFinder = function(model, attr) {
+    return function(attrValue, callback) {
+        query = {}
+        query[attr] = attrValue;
+        model.findOne(query).exec(callback);
+    }
 }
 
-var getUserByUsername = function(username, callback) {
-    models.User.findOne({username: username}).exec(callback);
-}
+var getUser             = modelFinder(models.User, "_id");
+var getUserByUsername   = modelFinder(models.User, "username");
+var getPin              = modelFinder(models.Pin, "_id");
 
 var getUserFolder = function(userId, callback) {
     models.FolderPin.findOne({owner: userId, depth: 0}).exec(callback);
@@ -66,25 +94,15 @@ var findPinForUser = function(path, userId, callback) {
     });
 }
 
-var createQuestion = function(question, answers, folderPath, ownerId, callback) {
-    findPinForUser(folderPath, ownerId, function(err, folder) {
-        var questionObj = new models.QuestionPin({
-            name: question,
-            depth: folder.depth + 1,
-            answers: answers,
-            pins: []
-        });
-
-        folder.children.push(questionObj);
-        folder.save(callback);
-    });
-};
-
 var pinAnswer = function(answer, path, ownerId, callback) {
     findPinForUser(path, ownerId, function(err, questionPin) {
         questionPin.pins.push(answer); 
         callback(err);
     });
+}
+
+var getHistory = function(userId, callback) {
+    models.QuestionPin.find({owner: userId}).sort({createdAt: "desc"}).exec(callback);
 }
 
 module.exports.models = models;
@@ -93,4 +111,6 @@ module.exports.createUser = createUser;
 module.exports.getUser = getUser;
 module.exports.getUserFolder = getUserFolder;
 module.exports.getUserByUsername = getUserByUsername;
+module.exports.getPin = getPin;
 module.exports.createQuestion = createQuestion;
+module.exports.getHistory = getHistory;
