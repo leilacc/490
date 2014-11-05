@@ -4,13 +4,15 @@ var LocalStrategy = require('passport-local').Strategy;
 var db = require('./db');
 
 passport.serializeUser(function(user, done) {
-	console.log("serializeUser");
-	done(null, user.id);
+	console.log("serializeUser: " + user);
+	done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
+	console.log("id: " + id);
 	db.getUser(id, function(err, user) {
-		console.log("deserializeUser");
+		console.log(err);
+		console.log("deserializeUser: " + user);
 		done(null, user);
 	});
 });
@@ -18,7 +20,6 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy(
 	function(username, password, done) {
 		db.getUserByUsername(username, function(err, user) {
-			console.log(user);
 			if (!user) {
 				return done(null, false, { message: 'Incorrect username.' });
 			}
@@ -37,10 +38,22 @@ var login = passport.authenticate('local', {
 	failureRedirect: '/login'
 });
 
+var register = function(req, res) {
+	var username = req.body.username;
+	var password = req.body.password;
+	var name = req.body.name;
+	console.log(req.body);
+
+	db.createUser(name, username, password, function(err, user) {
+		res.json(user);
+	});
+}
+
 var logout = function(req, res) {
 	req.logout();
 	res.redirect("/");
 }
 
 module.exports.login = login;
+module.exports.register = register;
 module.exports.logout = logout;

@@ -1,0 +1,31 @@
+html
+  head
+    include head_links
+    title Register | Loom
+body
+  .page-wrapper
+    include toplogo
+    section.header-11-sub
+      .container
+        .row
+          .col-lg-4
+          .col-lg-4
+            form(action='/register', method='post')
+              .input-group#login
+                .form-group
+                    | Username
+                    input.form-control.loom-login(
+                      type='text', name='username', autofocus,
+                      autocomplete='off')
+                .form-group
+                    | Name
+                    input.form-control.loom-login(
+                      type='text', name='name')
+                .form-group
+                    | Password
+                    input.form-control.loom-login(
+                      type='password', name='password')
+                button.btn.btn-default.btn-block#login_btn(
+                  type='submit')
+                  | Register
+  include scripts

@@ -23,50 +23,62 @@ var createUser = function(name, username, password, callback) {
         password: password
     });
 
+    var userFolder = new models.FolderPin({
+        name: name,
+        owner: user.id,
+        canRead: [user.id],
+        canWrite: [user.id],
+        depth: 0,
+        children: []
+    });
+
     user.save(callback);
 }
 
 var getUser = function(userId, callback) {
-    return models.User.findOne({id: userId}).exec(callback);
+    models.User.findOne({_id: userId}).exec(callback);
 }
 
 var getUserByUsername = function(username, callback) {
-    return models.User.findOne({username: username}).exec(callback);
+    models.User.findOne({username: username}).exec(callback);
 }
 
-var _getUserFolder = function(userId, callback) {
-    return models.FolderPin.findOne({owner: userId, depth: 0}).exec(callback);
+var getUserFolder = function(userId, callback) {
+    models.FolderPin.findOne({owner: userId, depth: 0}).exec(callback);
 }
 
 var findPin = function(path, parentFolder) {
-    if (path.length == 0)
+    if (path.length === 0)
         return parentFolder;
 
     var child = parentFolder.findChildByName(path[0]);
-    if (path.length == 1)
+    if (path.length === 1)
         return child;
 
     return findPin(_.rest(path), child);
 }
 
 var findPinForUser = function(path, userId, callback) {
-    _getUserFolder(userId, function(err, folder) {
+    console.log(userId);
+    getUserFolder(userId, function(err, folder) {
+        console.log(folder)
         callback(err, findPin(path, folder));
     });
 }
 
 var createQuestion = function(question, answers, folderPath, ownerId, callback) {
-    var folder = findPinForUser(folderPath, ownerId);
-    console.log(folder);
+    console.log(folderPath);
+    findPinForUser(folderPath, ownerId, function(err, folder) {
+        var questionObj = new models.QuestionPin({
+            name: question,
+            depth: folder.depth + 1,
+            answers: answers,
+            pins: []
+        });
 
-    var questionObj = new models.QuestionPin({
-        name: question,
-        depth: folder.depth + 1,
-        answers: answers,
-        pins: []
+        folder.children.push(questionObj);
+        folder.save(callback);
     });
-
-    questionObj.save(callback);
 };
 
 var pinAnswer = function(answer, path, ownerId, callback) {
@@ -78,6 +90,8 @@ var pinAnswer = function(answer, path, ownerId, callback) {
 
 module.exports.models = models;
 module.exports.connect = connect;
+module.exports.createUser = createUser;
 module.exports.getUser = getUser;
+module.exports.getUserFolder = getUserFolder;
 module.exports.getUserByUsername = getUserByUsername;
 module.exports.createQuestion = createQuestion;

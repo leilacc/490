@@ -1,25 +1,6 @@
-var socket = io('104.131.251.143:3000'),
-  results = $('#results'),
+var results = $('#results'),
   input = $("#question"),
   search_btn = $("#search_btn");
-
-socket.on("new answers", function (qa) {
-  var question = qa['question'];
-  var answers = qa['answers'];
-
-  pushNewQuestion(question, answers);
-  show_answers(question, answers);
-
-  $('#thumbtack0').click(function() {
-    $('#thumbtack0').css('color', '#EC6363');
-  });
-
-  spin_div.hide();
-});
-
-socket.on("error", function(error) {
-    console.log("AN ERROR OCCURRED: " + error);
-});
 
 var search = function() {
   var question = input[0].value;
@@ -27,13 +8,25 @@ var search = function() {
       return;
   }
 
-  socket.emit("ask question", question);
+  $.post("/ask", {"question": question, "currentPath[]": []}).done(function(data) {
+    var question = data['question'];
+    var answers = data['answers'];
+
+    pushNewQuestion(question, answers);
+    show_answers(question, answers);
+
+    $('#thumbtack0').click(function() {
+      $('#thumbtack0').css('color', '#EC6363');
+    });
+
+    spin_div.hide();
+  });
 
   spin_div.show();
   input.blur();
   results.empty();
   return false;
-};
+}
 
 // color animations
 var focus_color = "#1abc9c",
