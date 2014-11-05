@@ -32,7 +32,9 @@ var createUser = function(name, username, password, callback) {
         children: []
     });
 
-    user.save(callback);
+    user.save(function(err, user) {
+        userFolder.save(callback);
+    });
 }
 
 var getUser = function(userId, callback) {
@@ -59,15 +61,12 @@ var findPin = function(path, parentFolder) {
 }
 
 var findPinForUser = function(path, userId, callback) {
-    console.log(userId);
     getUserFolder(userId, function(err, folder) {
-        console.log(folder)
         callback(err, findPin(path, folder));
     });
 }
 
 var createQuestion = function(question, answers, folderPath, ownerId, callback) {
-    console.log(folderPath);
     findPinForUser(folderPath, ownerId, function(err, folder) {
         var questionObj = new models.QuestionPin({
             name: question,
