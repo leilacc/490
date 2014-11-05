@@ -45,7 +45,9 @@ var register = function(req, res) {
 	console.log(req.body);
 
 	db.createUser(name, username, password, function(err, user) {
-		res.json(user);
+		passport.authenticate('local')(req, res, function () {
+			res.redirect('/search');
+		});
 	});
 }
 
