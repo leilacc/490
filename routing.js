@@ -11,14 +11,21 @@ var views = {
   '/': 'index',
   '/login': 'login',
   '/register': 'register',
-  '/search': 'search',
-  '/report': 'report',
-  '/cases': 'cases',
-  '/history': 'history'
+  '/search': {view: 'search', requiresAuth: true},
+  '/report': {view: 'report', requiresAuth: true},
+  '/cases': {view: 'cases', requiresAuth: true},
+  '/history': {view: 'history', requiresAuth: true}
 };
 
 var renderOnGet = function(path, view, app) {
     app.get(path, function(req, res) {
+
+      var requiresAuth = false;
+      if (view.requiresAuth) {
+        view = view.view;
+        requiresAuth = true;
+      }
+
       vars = {};
       if (req.user) {
         vars['username'] = req.user.name.toUpperCase();
@@ -27,6 +34,10 @@ var renderOnGet = function(path, view, app) {
             view = 'search'
         }
       }
+      // else if (requiresAuth) {
+      //   view = 'login';
+      // }
+
       res.render(view, vars);
     });
 }
@@ -53,6 +64,8 @@ exports = module.exports = function(express, app) {
 
     app.post('/ask', askQuestion);
     app.post('/share', shareWithUser);
+    app.post('/save', saveCase);
+    app.get('/folder', getUserFolder);
 
     // this isn't really a GET, but I didn't want it to conflict with the
     // view name.
@@ -70,8 +83,10 @@ var askQuestion = function(req, res) {
     if (!currentPath)
         currentPath = []
 
-    if (!req.user)
-        res.render('/login', {});
+    if (!req.user) {
+        res.redirect(500, 'login');
+        return;
+    }
 
     var numAnswersReceived = 0;
     watson.askAndPoll(question, 10, 2000, function(error, watsonResponse) {
@@ -90,7 +105,7 @@ var askQuestion = function(req, res) {
 
         if (newNumAnswers > numAnswersReceived) {
             res.json({question: question, answers: answers});
-            db.createQuestion(question, answers, currentPath, userId);
+            db.createQuestion(question, answers, currentPath, req.user._id);
             numAnswersReceived = newNumAnswers;
         }
     });
@@ -112,4 +127,35 @@ var shareWithUser = function(req, res) {
       pin.shareWithUser(userId, canWrite);
       res.end();
     })
+}
+
+var saveCase = function(req, res) {
+    var question = req.body.question;
+    var answer = req.body.answer;
+    var path = req.body.path;
+    var userId = req.user._id;
+
+    // see if the pin exists in the user root folder, in which case we need to
+    // save it into the correct path
+    db.findPinForUser([question], function(err, pin) {
+        db.getUserFolder(userId, function(err, folder) {
+            if (pin) {
+                pin.moveInto(path, folder);
+                res.json(folder);
+            } else {
+                pin = db.findPin(path.concat([question]), folder);
+            }
+
+            pin.pins.push(answer);
+            res.json(pin);
+        });
+    });
+}
+
+var getUserFolder = function(req, res) {
+    var userId = req.user._id;
+
+    db.getUserFolder(userId, function(err, folder) {
+        res.json(folder);
+    });
 }
