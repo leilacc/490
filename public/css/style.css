@@ -1665,6 +1665,12 @@ a.folder-link {
   cursor: pointer;
   font-size: 15px;
 }
+a.acl {
+  float: right;
+  padding-top: 3px;
+}
+a.acl:hover {
+}
 .pin-col {
   padding: 0px;
 }
