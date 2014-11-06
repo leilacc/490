@@ -5,6 +5,7 @@ var setClickoverHandlers = function(id) {
 
       var input = $('#new_collab_input' + id);
       var new_collab = $(input).val();
+      var cur_collabs = $('#collab' + id);
 
       // TODO: get name of username automatically
       if (new_collab == 'leila') {
@@ -18,14 +19,18 @@ var setClickoverHandlers = function(id) {
                                new_collab +
                             "</span>";
 
-      $('#collab' + id).append(new_collab_html); // add new user to list of users
+      if (cur_collabs.html().indexOf('No collaborators') == -1) {
+        cur_collabs.append(new_collab_html); // add new user to list of users
+      } else {
+        cur_collabs.html(new_collab_html); // add new user to list of users
+      }
       input.val(''); // clear value of input field
   });
 };
 
 var get_collaborators = function() {
   // TODO: return the current collaborators for a given folder
-  return "";
+  return "<span class='folder-link'>No collaborators</span>";
 };
 
 var get_acl_content = function(id) {
