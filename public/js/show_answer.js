@@ -17,13 +17,27 @@ var show_answers = function(question, answers) {
       global_close: true,
       esc_close: true,
       placement: 'bottom',
-      content: get_popover_content(i)
+      content: get_popover_content(i),
+      onShown: function() {setClickoverHandlers($(this)[0]['$element'][0]['id'].replace( /^\D+/g, ''))}
     });
+
   }
 };
 
+var setClickoverHandlers = function(id) {
+  $( "#new_folder" + id ).submit(function( event ) {
+      event.preventDefault();
+  });
+}
+
 var get_popover_content = function(id) {
-  return "<input type='text' class='new_folder' placeholder='New folder' autofocus='autofocus'>" +
+  var new_folder_form = "<form id='new_folder" + id + "'>" +
+                          "<input type='text' class='new_folder' id='new_folder_input"
+                            + id +
+                            "' placeholder='New folder' autofocus='autofocus'>" +
+                        "</form>";
+  var folder_links = "";
+  return new_folder_form + folder_links;
            "<span class='folder-link'>" +
              "<a class='folder-link' data-dismiss='clickover' onclick='save_case(0, 0)'>My Cases</a>" +
             "</span>" +
@@ -59,6 +73,7 @@ var gen_result = function(title, answer, id) {
                 '<a href="#" id="thumbtack' + id + '" class="thumbtack" rel="clickover">' +
                   '<i class="fa fa-thumb-tack fa-lg"></i>' +
                 '</a>' +
+                '<span class="pin-name">Tercon</span>' +
               '</span>' +
             '</div>' +
           '</div>'
