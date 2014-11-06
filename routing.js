@@ -34,9 +34,6 @@ var renderOnGet = function(path, view, app) {
             view = 'search'
         }
       }
-      // else if (requiresAuth) {
-      //   view = 'login';
-      // }
 
       res.render(view, vars);
     });
@@ -65,7 +62,9 @@ exports = module.exports = function(express, app) {
     app.post('/ask', askQuestion);
     app.post('/share', shareWithUser);
     app.post('/save', saveCase);
+
     app.get('/folder', getUserFolder);
+    app.post('/folder', createFolder);
 
     // this isn't really a GET, but I didn't want it to conflict with the
     // view name.
@@ -154,8 +153,21 @@ var saveCase = function(req, res) {
 
 var getUserFolder = function(req, res) {
     var userId = req.user._id;
-
+    
     db.getUserFolder(userId, function(err, folder) {
         res.json(folder);
+    });
+}
+
+var createFolder = function(req, res) {
+    var name = req.body.name;
+    var path = req.body.path;
+    var userId = req.user._id;
+    var userId = req.body._id;
+
+    db.getUserFolder(userId, function(err, folder) {
+        db.createFolder(name, path, folder, function(err, folder) {
+            res.json(folder);
+        })
     });
 }

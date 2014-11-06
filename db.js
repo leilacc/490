@@ -47,8 +47,8 @@ var createQuestion = function(question, answers, folderPath, ownerId, callback) 
 
             owner: ownerId,
             parent: folder._id,
-            canRead: [ownerId],
-            canWrite: [ownerId],
+            canRead: folder.canRead,
+            canWrite: folder.canWrite,
             
             pins: []
         });
@@ -60,6 +60,37 @@ var createQuestion = function(question, answers, folderPath, ownerId, callback) 
         });
     });
 };
+
+var createFolder = function(name, path, cwd, callback) {
+    var parent = findPin(path, cwd);
+
+    var newFolder = new models.FolderPin({
+        name: name,
+        depth: parent.depth + 1,
+
+        owner: parent.owner,
+        parent: parent._id,
+
+        // TODO: Do these arrays need to be cloned instead of just referenced?
+        // e.g. what if user wants to remove permissions on a folder within
+        // folder
+        canRead: parent.canRead,
+        canWrite: parent.canWrite,
+
+        children: []
+    })
+
+    newFolder.save(function(err, folder) {
+        models.FolderPin.findByIdAndUpdate(
+            parent._id,
+            { $push: { children: newFolder } }
+        ).exec(function(err, parent) {
+            parent.propogateChangesUpwards(function(root) {
+                callback(null, folder);
+            })
+        });
+    });
+}   
 
 var modelFinder = function(model, attr) {
     return function(attrValue, callback) {
@@ -81,12 +112,15 @@ var findPin = function(path, parentFolder) {
     if (path.length === 0)
         return parentFolder;
 
+    console.log(path[0]);
+    console.log(parentFolder);
     var child = parentFolder.findChildByName(path[0]);
     if (path.length === 1)
         return child;
 
     return findPin(_.rest(path), child);
 }
+
 
 var findPinForUser = function(path, userId, callback) {
     getUserFolder(userId, function(err, folder) {
@@ -113,4 +147,5 @@ module.exports.getUserFolder = getUserFolder;
 module.exports.getUserByUsername = getUserByUsername;
 module.exports.getPin = getPin;
 module.exports.createQuestion = createQuestion;
+module.exports.createFolder = createFolder;
 module.exports.getHistory = getHistory;

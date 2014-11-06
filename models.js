@@ -93,12 +93,19 @@ function BaseSchema() {
         this.copyInto(folderPath, cwd);
     }
 
-    this.methods.propogateChangesUpwards = function() {
-        if (this.parent != null) {
-            FolderPin.findById(this.parent).exec(function(err, folder) {
-                folder.save();
-                folder.propogateChangesUpwards();
-            });
+    this.methods.propogateChangesUpwards = function(callback) {
+        if (this.parent) {
+            console.log(this.parent);
+            FolderPin.findByIdAndUpdate(
+                this.parent,
+                { "children.id": this._id},
+                { $set: { "children.$": this.toObject()}}
+                ).exec(function(err, parent) {
+                    console.log(parent);
+                    parent.propogateChangesUpwards(callback);
+                });
+        } else if (callback) {
+            callback(this);
         }
     }
 
@@ -118,7 +125,7 @@ var QuestionPin = Pin.discriminator('QuestionPin', QuestionPinSchema);
 
 /* Folder Pin */
 var FolderPinSchema = new BaseSchema({
-    children: [PinSchema],
+    children: [{}],
 });
 
 FolderPinSchema.methods.findChildByName = function(name) {
