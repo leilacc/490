@@ -90,7 +90,7 @@ var askQuestion = function(req, res) {
 
         if (newNumAnswers > numAnswersReceived) {
             res.json({question: question, answers: answers});
-            db.createQuestion(question, answers, currentPath, userId);
+            db.createQuestion(question, answers, currentPath, req.user._id);
             numAnswersReceived = newNumAnswers;
         }
     });
