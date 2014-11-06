@@ -1651,7 +1651,6 @@ h3.popover-title {
 input.new_folder {
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 7px;
   padding: 4px 6px;
   font-size: 15px;
 }
@@ -1677,4 +1676,7 @@ a.acl:hover {
 }
 .pin-col {
   padding: 0px;
+}
+div.new-folder {
+  margin-right: 20px;
 }

@@ -8,7 +8,11 @@ body
     section.header-11-sub
       .container
         .row
-          .col-lg-2
+          .col-lg-1
+          .col-lg-1.new-folder
+            a#new-folder.btn.btn-primary(href='')
+              i.fa.fa-plus.fa-lg
+              | &nbsp;&nbsp;Folder
           .col-lg-8
             .panel.panel-default
               .panel-heading
@@ -83,11 +87,7 @@ body
                             | work as of the date of abandonment was valued at
                             | $16,000 and, after deducting the amount of the
                             | first payment, she determined that 1535709 owed
-          .col-lg-1
-            a#new-folder.btn.btn-primary(href='')
-              i.fa.fa-plus.fa-lg
-              | &nbsp;&nbsp;Folder
-          .col-lg-1
+          .col-lg-2
   include scripts
   script(src='js/bootstrapx-clickover.js')
   script(src='js/add_collaborator.js')
