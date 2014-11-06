@@ -8,7 +8,7 @@ var format_history_result = function(result) {
   var index = result.index;
 
   var scrubbed = question;
-  scrubbed = scrubbed.replace('"', "&quot;").replace(' ', "+");
+  scrubbed = scrubbed.replace('"', "&quot;").split(' ').join("+");
   var minutes = updatedAt.getMinutes().toString();
   if (minutes.length === 1) {
     minutes = "0" + minutes;
