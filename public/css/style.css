@@ -1578,8 +1578,10 @@ button.thumb-tack {
 button.thumb-tack:hover {
   background-color: #fff;
 }
-.fa-thumb-tack {
+.thumbtack {
   color: #FDCDC6;
+}
+.fa-thumb-tack {
   margin-top: 27px;
   transition: color 0.15s ease;
 }
@@ -1625,9 +1627,6 @@ button.btn-block {
 section.front-pic {
   padding-bottom: 200px;
 }
-a#new-folder {
-  float: right;
-}
 a.saved-q {
   cursor: pointer;
 }
@@ -1660,6 +1659,11 @@ span.folder-link {
   display: block;
   padding-left: 7px;
   padding-top: 4px;
+}
+span.pin-name {
+  margin-left: 8px;
+  color: #EE7373;
+  font-size: 18px;
 }
 a.folder-link {
   cursor: pointer;

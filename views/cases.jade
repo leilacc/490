@@ -12,7 +12,7 @@ body
           .col-lg-8
             .panel.panel-default
               .panel-heading
-                a(href='' class='acl')
+                a(href='#' class='acl' id='acl0' rel='clickover')
                   i.fa.fa-users.fa-lg
                 h4.panel-title Tercon RFEI
               .panel-body
@@ -89,3 +89,5 @@ body
               | &nbsp;&nbsp;Folder
           .col-lg-1
   include scripts
+  script(src='js/bootstrapx-clickover.js')
+  script(src='js/add_collaborator.js')
