@@ -36,20 +36,13 @@ var get_popover_content = function(id) {
                             + id +
                             "' placeholder='New folder' autofocus='autofocus'>" +
                         "</form>";
-  var folder_links = "";
-  return new_folder_form + folder_links;
-           "<span class='folder-link'>" +
-             "<a class='folder-link' data-dismiss='clickover' onclick='save_case(0, 0)'>My Cases</a>" +
+  var folder_links  = "<span class='folder-link'>" +
+             "<a class='folder-link' data-dismiss='clickover' onclick='save_case(" + id + ", \"Tercon\")'>Tercon</a>" +
             "</span>" +
            "<span class='folder-link'>" +
-             "<a class='folder-link' data-dismiss='clickover'>&nbsp&nbsp&nbspTercon</a>" +
-            "</span>" +
-           "<span class='folder-link'>" +
-             "<a class='folder-link' data-dismiss='clickover'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspHighway Act</a>" +
-            "</span>" +
-           "<span class='folder-link'>" +
-             "<a class='folder-link' data-dismiss='clickover'>&nbsp&nbsp&nbspKnapp</a>" +
+             "<a class='folder-link' data-dismiss='clickover' onclick='save_case(" + id + ", \"Landmark vs Ontario\")'>Landmark vs Ontario</a>" +
             "</span>";
+  return new_folder_form + folder_links;
 };
 
 var gen_result = function(title, answer, id) {
@@ -59,7 +52,7 @@ var gen_result = function(title, answer, id) {
             '<div class="col-lg-8">' +
               '<div class="result">' +
                 '<div class="result-title">' +
-                  '<a href="">' +
+                  '<a href="https://www.canlii.org/en/ca/scc/doc/2010/2010scc4/2010scc4.html">' +
                     title +
                   '</a>' +
                 '</div>' +
@@ -69,11 +62,10 @@ var gen_result = function(title, answer, id) {
               '</div>' +
             '</div>' +
             '<div class="col-lg-2 pin-col">' +
-              '<span class="result-thumb-tack">' +
+              '<span class="result-thumb-tack" id="result' + id + '">' +
                 '<a href="#" id="thumbtack' + id + '" class="thumbtack" rel="clickover">' +
                   '<i class="fa fa-thumb-tack fa-lg"></i>' +
                 '</a>' +
-                '<span class="pin-name">Tercon</span>' +
               '</span>' +
             '</div>' +
           '</div>'

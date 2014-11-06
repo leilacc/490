@@ -1,4 +1,3 @@
-
 var setClickoverHandlers = function(id) {
   $( "#new_collab" + id ).submit(function( event ) {
       event.preventDefault(); // prevent page reload
