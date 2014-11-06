@@ -163,7 +163,6 @@ var createFolder = function(req, res) {
     var name = req.body.name;
     var path = req.body.path;
     var userId = req.user._id;
-    var userId = req.body._id;
 
     db.getUserFolder(userId, function(err, folder) {
         db.createFolder(name, path, folder, function(err, folder) {
