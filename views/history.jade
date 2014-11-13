@@ -1,13 +1,16 @@
 html
   head
     include head_links
-    title History | Loom
+    title Loom History
 body
   .page-wrapper
     include topnav
     section.header-11-sub
       .container
-        #results
+        .row
+          .col-lg-2
+          .col-lg-10
+            #results
   include scripts
   script(src='js/get_history.js')
  
