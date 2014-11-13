@@ -7,8 +7,9 @@ var show_answers = function(question, answers) {
   var question_obj = str_to_obj_of_words(question);
   for(var i = 0; i < answers.length; i++) {
     results.append(gen_result(answers[i].evidence.title,
-                              highlighted_answer(answers[i].text,
+                              highlighted_answer(answers[i].evidence.text,
                                                  question_obj),
+                              answers[i].confidence,
                               i));
 
     var thumbtack = $('#thumbtack' + i);
@@ -45,7 +46,7 @@ var get_popover_content = function(id) {
   return new_folder_form + folder_links;
 };
 
-var gen_result = function(title, answer, id) {
+var gen_result = function(title, answer, confidence, id) {
   return ('<div class="row">' +
             '<div class="col-lg-2">' +
             '</div>' +
@@ -58,6 +59,9 @@ var gen_result = function(title, answer, id) {
                 '</div>' +
                 '<div class="result-answer">' +
                   answer +
+                '</div>' +
+                '<div class="confidence">' +
+                  (Math.round(confidence * 10000) / 100) + '%' +
                 '</div>' +
               '</div>' +
             '</div>' +
