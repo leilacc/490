@@ -1,4 +1,4 @@
-var MIN_CONFIDENCE_LVL = 10;
+var MIN_CONFIDENCE_LVL = 0;
 
 var show_answers = function(question, answers) {
   if (typeof answers === 'undefined') {
