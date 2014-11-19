@@ -2,6 +2,13 @@ var results = $('#results'),
   input = $("#question"),
   search_btn = $("#search_btn");
 
+// define startsWith function for strings
+if (typeof String.prototype.startsWith != 'function') {
+  String.prototype.startsWith = function (str){
+    return this.slice(0, str.length) == str;
+  };
+}
+
 var search = function() {
   var question = input[0].value;
   if (question.length == 0) {
@@ -13,11 +20,17 @@ var search = function() {
     var answers = data['answers'];
 
     pushNewQuestion(question, answers);
-    show_answers(question, answers);
 
-    $('#thumbtack0').click(function() {
-      $('#thumbtack0').css('color', '#EC6363');
-    });
+    var lowerq = question.toLowerCase();
+    if (lowerq.startsWith("what is the chance of") ||
+        lowerq.startsWith("what are the chances of")
+      ) {
+      // Show prediction result
+      predict(question, answers);
+    } else {
+      // Show regular answers
+      show_answers(question, answers);
+    }
 
     spin_div.hide();
   });
@@ -26,6 +39,10 @@ var search = function() {
   input.blur();
   results.empty();
   return false;
+}
+
+function predict(question, answers) {
+  console.log(question);
 }
 
 // color animations
