@@ -1,9 +1,13 @@
 var results = $('#results');
-var time = "3:14 PM";
+var lastDate;
 
 var format_history_result = function(result) {
   var question = result.name;
   var updatedAt = new Date(result.updatedAt);
+  if (updatedAt.getDate() < lastDate.getDate()) {
+    lastDate = updatedAt;
+    add_date_header();
+  }
 
   var index = result.index;
 
@@ -31,8 +35,31 @@ var format_history_result = function(result) {
          );
 }
 
+var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+            'Friday', 'Saturday'];
+var months = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November',
+              'December'];
+function add_date_header() {
+  var day = days[lastDate.getDay()];
+  var month = months[lastDate.getMonth()];
+  var date_header = '<div class="row"><h3 class="date-header">' +
+    day + ' ' + month + ' ' + lastDate.getDate() +
+    '</h3></div>';
+  results.append(date_header);
+}
+
 $.post("/history", function(data) {
-  results.append('<div class="row"><h3 style="font-size: 30px; margin-top:-40px;text-align: left;" >NOVEMBER 6</h3></div>');
+  // spacing
+  results.append('<div class="row" style="margin-top:-60px"></div>');
+
+  if (data.length == 0) {
+    results.append('<div class="row">You haven\'t asked any questions yet!</div>');
+    return
+  }
+
+  lastDate = new Date(data[0].updatedAt);
+  add_date_header();
   for (var i = 0; i < data.length; i++) {
     var result = data[i];
     result.index = i + 1;

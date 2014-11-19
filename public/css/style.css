@@ -1661,7 +1661,7 @@ span.folder-link {
 }
 span.pin-name {
   margin-left: 8px;
-  color: #EE7373;
+  color: #999;
   font-size: 14px;
 }
 a.folder-link {
@@ -1676,9 +1676,29 @@ a.acl:hover {
 }
 .pin-col {
   padding: 0px;
+  padding-left: 18px;
 }
 div.new-folder {
   margin-right: 20px;
+}
+
+h3.date-header {
+  font-size: 30px;
+  margin-top: 50px;
+  text-align: left;
+}
+div.confidence {
+  font-size: 18px;
+  margin-top: 22px;
+  text-align: right;
+}
+a.confidence {
+  color: #ccc;
+  transition: 0.2s;
+}
+a.confidence:hover {
+  color: #34495e;
+  transition: 0.2s;
 }
 
 /* PATH */
@@ -1689,7 +1709,6 @@ div#path {
 div.path-part {
   float: left;
   width: 200px;
-  
 }
 div.path-part .separator {
   float: left;

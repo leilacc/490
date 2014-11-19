@@ -1,3 +1,5 @@
+var MIN_CONFIDENCE_LVL = 0;
+
 var show_answers = function(question, answers) {
   if (typeof answers === 'undefined') {
     search();
@@ -22,6 +24,7 @@ var show_answers = function(question, answers) {
       onShown: function() {setClickoverHandlers($(this)[0]['$element'][0]['id'].replace( /^\D+/g, ''))}
     });
 
+  $('[data-toggle="tooltip"]').tooltip();
   }
 };
 
@@ -47,8 +50,20 @@ var get_popover_content = function(id) {
 };
 
 var gen_result = function(title, answer, confidence, id) {
+  confidence = Math.round(confidence * 100);
+  if (confidence < MIN_CONFIDENCE_LVL) {
+    return
+  }
+
   return ('<div class="row">' +
-            '<div class="col-lg-2">' +
+            '<div class="col-lg-1">' +
+            '</div>' +
+            '<div class="col-lg-1 confidence">' +
+              '<a href="#" class="confidence"' +
+                  'data-toggle="tooltip" data-placement="left"' +
+                  'title="We\'re ' + confidence + '% sure this is the right answer">' +
+                  confidence + '%' +
+              '</a>' +
             '</div>' +
             '<div class="col-lg-8">' +
               '<div class="result">' +
@@ -59,9 +74,6 @@ var gen_result = function(title, answer, confidence, id) {
                 '</div>' +
                 '<div class="result-answer">' +
                   answer +
-                '</div>' +
-                '<div class="confidence">' +
-                  (Math.round(confidence * 10000) / 100) + '%' +
                 '</div>' +
               '</div>' +
             '</div>' +
