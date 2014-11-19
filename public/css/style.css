@@ -1680,3 +1680,26 @@ a.acl:hover {
 div.new-folder {
   margin-right: 20px;
 }
+
+/* PATH */
+
+div#path {
+  height: 50px;
+}
+div.path-part {
+  float: left;
+  width: 200px;
+  
+}
+div.path-part .separator {
+  float: left;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-size: 24pt;
+  color: #16a085;
+}
+div.path-part .name {
+  color: #357ebd;
+  font-size: 18px;
+  margin-top: 12px;
+}
