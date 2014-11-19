@@ -1685,3 +1685,8 @@ h3.date-header {
   margin-top: 50px;
   text-align: left;
 }
+div.confidence {
+  font-size: 18px;
+  margin-top: 22px;
+  text-align: right;
+}
