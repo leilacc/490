@@ -24,6 +24,7 @@ var show_answers = function(question, answers) {
       onShown: function() {setClickoverHandlers($(this)[0]['$element'][0]['id'].replace( /^\D+/g, ''))}
     });
 
+  $('[data-toggle="tooltip"]').tooltip();
   }
 };
 
@@ -58,7 +59,11 @@ var gen_result = function(title, answer, confidence, id) {
             '<div class="col-lg-1">' +
             '</div>' +
             '<div class="col-lg-1 confidence">' +
-              confidence + '%' +
+              '<a href="#" class="confidence"' +
+                  'data-toggle="tooltip" data-placement="left"' +
+                  'title="We\'re ' + confidence + '% sure this is the right answer">' +
+                  confidence + '%' +
+              '</a>' +
             '</div>' +
             '<div class="col-lg-8">' +
               '<div class="result">' +
