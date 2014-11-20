@@ -1,0 +1,35 @@
+html
+  head
+    include head_links
+    title New case
+body
+  .page-wrapper
+    include topnav
+    section.header-11-sub
+      .container
+        .row
+          .col-lg-2
+          .col-lg-8
+            h3
+              | Add new case
+            form#new-case
+              .input-group.new-case
+                span.input-label
+                  | Case name
+                input.new-case(type="text", name="case-name",
+                                   placeholder="")#case-name
+              .input-group.new-case
+                span.input-label
+                  | Case facts
+                textarea(type="text", name="case-facts", rows="3")
+              .input-group.new-case
+                span.input-label
+                  | Allegations
+                textarea(type="text", name="case-allegations", rows="3")
+              .input-group.new-case
+                span.input-label
+                  | Actions sought
+                textarea(type="text", name="case-actions", rows="3")
+              button.btn.btn-default#add-case
+                | Add case
+  include scripts

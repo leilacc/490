@@ -1,0 +1,38 @@
+html
+  head
+    include head_links
+    title Players vs CHL
+body
+  .page-wrapper
+    include topnav
+    section.header-11-sub
+      .container
+        .row
+          .col-lg-2
+          .col-lg-8
+            h3
+              | Players vs CHL
+            form#new-case
+              .input-group.new-case
+                span.input-label
+                  | Case name
+                input.new-case(type="text", name="case-name",
+                                   placeholder="Players vs CHL")#case-name
+              .input-group.new-case
+                span.input-label
+                  | Case facts
+                textarea(type="text", name="case-facts", rows="2",
+                         placeholder="The players in CHL are paid a weekly allowance that is not based on hours worked.")
+              .input-group.new-case
+                span.input-label
+                  | Allegations
+                textarea(type="text", name="case-allegations", rows="6",
+                         placeholder="The CHL players are employees who provide services to the team in accordance with the standard player contract signed by all players.  The average player spends 35-40 hours of his time each week on team business but earns a fee that violates minimum wage legislation in every Province and State where the teams play hockey.  CHL and its teams acted in concert to get players to sign contracts they knew contravened provincial employment standards laws.")
+              .input-group.new-case
+                span.input-label
+                  | Actions sought
+                textarea(type="text", name="case-actions", rows="3",
+                         placeholder="Compensation to the players for their back wages, overtime pay, holiday pay, and vacation pay, which should have been paid to them while they played in the League.")
+              button.btn.btn-default#save-case
+                | Save
+  include scripts
