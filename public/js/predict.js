@@ -107,7 +107,16 @@ function get_panel(title, answers) {
   }
 
   // close panel-body, collapseOne, panel, accordian, col, row
-  return panel + '</div></div></div></div></div></div>';
+  panel = panel + '</div></div></div></div></div>';
+  panel = panel + 
+            '<div class="col-lg-2 pin-col">' +
+              '<span class="result-thumb-tack" id="result' + id + '">' +
+                '<a href="#" id="thumbtack' + id + '" class="thumbtack" rel="clickover">' +
+                  '<i class="fa fa-thumb-tack fa-lg"></i>' +
+                '</a>' +
+              '</span>' +
+            '</div>' +
+          '</div>';
 }
 
 function show_prediction(case_answers, context_answers) {
