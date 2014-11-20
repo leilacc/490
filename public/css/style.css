@@ -1702,11 +1702,32 @@ a.confidence:hover {
   transition: 0.2s;
 }
 
-/* PATH */
+/* CASES HEADER */
 
+div.header {
+  width: 102%;
+  height: 50px;
+  margin-top: 12px;
+  margin-left: -40px;
+}
+a#new-folder {
+  float: right;
+  /*margin-right: 40px;*/
+  /*margin-top: 10px;*/
+}
+
+a#new-folder i {
+  margin: 2px auto;
+}
+
+/* PATH */
 div#path {
   height: 50px;
+  float: left;
+  position: relative;
+  top: 12%;
 }
+
 div.path-part {
   float: left;
   width: 200px;
@@ -1715,13 +1736,48 @@ div.path-part .separator {
   float: left;
   margin-right: 10px;
   margin-left: 10px;
+  margin-top: -12px;
   font-size: 24pt;
   color: #16a085;
 }
 div.path-part .name {
   color: #357ebd;
   font-size: 18px;
-  margin-top: 12px;
+  /*margin-top: 12px;*/
+}
+
+/* CASE */
+
+div.case {
+  margin-bottom: 20px;
+  width: 800px;
+}
+
+div.case p {
+  font-size: 20px;
+  margin-top: 5px;
+  margin-left: 55px;
+}
+
+div.folder a {
+  font-size: 20px;
+  /*margin-top: 10px;*/
+  margin-left: 25px;
+  position: relative;
+  top: 8px;
+}
+
+div.case .panel-title a {
+  font-size: 20px;
+  margin-top: 5px;
+  /*margin-left: 35px;*/
+}
+
+div.case .folder_icon {
+  width: 40px;
+  height: 40px;
+  float: left;
+  background-image: url("../../../img/folder.png");
 }
 
 

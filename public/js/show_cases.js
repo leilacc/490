@@ -1,14 +1,24 @@
+var next_id = 10;
+
 var cases = [{
   type: "folder",
   name: "Tercon",
   id: 1,
   children: [{
+    type: "folder",
+    name: "Other Stuff",
+    id: 4, 
+    children: []
+  }, {
     type: "question",
     name: "What were the compliancy issues with Brentwood's bid in 2006?",
     id: 2,
     answers: [{
       title: "CanLII - 2010 SCC 4 (CanLII) : Tercon Contractors Ltd. v. British Columbia (Transportation and Highways), [2010] 1 SCR 69, 2010 SCC 4 (CanLII) : Decisions cited",
       text: "Analysis. A. Was the Brentwood Bid Ineligible? [14] The first issue is whether the Brentwood bid was from an eligible bidder. The judge found that the bid was in substance, although not in form, from a joint venture of Brentwood and EAC and that it was, therefore, an ineligible bid. The Province attacks this finding on three grounds: (i) a joint venture is not a legal person and therefore the Province could not and did not contract with a joint venture; (ii) it did not award the contract to EAC and EAC had no contractual responsibility to the Province for failure to perform the contract; (iii) there was no term of the RFP that restricted the right of proponents to enter into joint venture agreements with others; this arrangement merely left Brentwood, the original proponent, in place and allowed it to"
+    }, {
+      title: "Other Answer",
+      text: "This provides some more information that may or may not be useful."
     }]
   }, {
     type: "question",
@@ -18,22 +28,22 @@ var cases = [{
       title: "CanLII - 2010 SCC 4 (CanLII) : Tercon Contractors Ltd. v. British Columbia (Transportation and Highways), [2010] 1 SCR 69, 2010 SCC 4 (CanLII) : Decisions cite",
       text: "In my view, it is the Province's position that better deserves that description. It had a bid which it knew to be on behalf of a joint venture, encouraged the bid to proceed and took steps to obfuscate the reality that it was on behalf of a joint venture. Permitting the bid to proceed in this way gave the joint venture a competitive advantage in the bidding process, and the record could not be clearer that the joint venture nature of the bid was one of its attractions during the selection process. The Province nonetheless submits that so long as only the name of Brentwood appears on the bid and ultimate Contract B, all is well."
     }]
-  }, {
-    type: "folder",
-    name: "Other Stuff",
-    id: 4, 
-    children: []
   }] 
 }, {
   type: "folder",
   name: "Some Other Folder",
   id: 5,
-  children: []
+  children: [{
+    type: "folder",
+    name: "Nested Shit",
+    id: 6,
+    children: []
+  }]
 }];
 
 var root_folder = {
   type: "folder",
-  id: 0,
+  id: 0,  
   name: "Yana Davis",
   children: cases
 }
@@ -45,11 +55,12 @@ var cases_container = $('#saved-cases'),
   path_div = $("#path");
 
 var get_name_width = function(name) {
-  return 18 * name.length;
-};
+  var base_width = name.width("18px helvetica neue");
+  return (name === root_folder.name.toUpperCase()) ? base_width : base_width + 40; 
+}
 
 var gen_path_part = function(index, path_part) {
-  var name = path_part.name;
+  var name = path_part.name.toUpperCase();
   var id = path_part.id;
 
   return ('<div class="path-part" style="width: ' + get_name_width(name) + 'px">' +
@@ -113,24 +124,132 @@ var go_up_to_folder = function(id) {
   enter_folder(id);
 }
 
+var create_new_folder = function(name) {
+  current_contents.unshift({id: next_id++, name: name, type: "folder", children: []});
+  show_cases(current_contents)
+}
+
 var show_cases = function(cases) {
   cases_container.empty();
 
   for(var i = 0; i < cases.length; i++) {
     cases_container.append(gen_case(i, cases[i]));
+
+    var acl = $('#acl' + i);
+    acl.clickover({
+      html: true,
+      global_close: true,
+      esc_close: true,
+      placement: 'bottom',
+      content: get_acl_content(i),
+      onShown: function() {setClickoverHandlers($(this)[0]['$element'][0]['id'].replace( /^\D+/g, ''))}
+    });
   }
 };
 
 var gen_case = function(i, case_to_gen) {
-  return ('<div class="row" onclick="enter_folder( ' + case_to_gen.id + ')">' +
-    case_to_gen.name +
-  '</div>');
+  if (case_to_gen.type == 'folder')
+    return ('<div class="row case folder panel">' +
+      '<div class="folder_icon"></div>' +
+      '<a href="#" onclick="enter_folder(' + case_to_gen.id + ')">' + case_to_gen.name + '</a>' +
+      '<a href="#" id="acl' + i + '" rel="clickover" class="acl" data-original-title="" title=""><i class="fa fa-users fa-lg"></i></a>' +
+    '</div>');
+
+  var collapse_div_id = "collapse" + i;
+  return '<div class="row case panel panel-default">' +
+    // '<div class="icon question_icon"></div>' +
+    '<div class="panel-heading">' +
+      '<h4 class="panel-title">' +
+        '<a data-toggle="collapse" data-target="#' + collapse_div_id + '" class="saved-q">' + case_to_gen.name + '</a></h4>' +
+    '</div>' +
+    '<div id="' + collapse_div_id + '" class="panel-collapse collapse">' +
+      '<div class="panel-body">' +
+        gen_answers(case_to_gen) +
+      '</div>' +
+    '</div>' + 
+  '</div>';
 };
+
+var gen_answers = function(case_to_gen) {
+  result = "";
+  var answers = case_to_gen.answers;
+  for (var i = 0; i < answers.length; i++) {
+    result += '<div class="result-title"><a href="">' + answers[i].title + '</a></div>' +
+      '<div class="result-answer">' + answers[i].text + '</div>';
+  }
+  return result;
+};
+
+            //   <div class="panel-body">
+            //     <div class="result-title"><a href="">Landmark II Inc v 1535709 Ontario Limited</a></div>
+            //     <div class="result-answer">
+            //       The trial judge found that 1535709 had breached
+            //       the contract by failing to pay and that Landmark
+            //       was not obligated to continue its work without
+            //       payment. The trial judge found that Landmark's
+            //       work as of the date of abandonment was valued at
+            //       $16,000 and, after deducting the amount of the
+            //       first payment, she determined that 1535709 owed
+            //       Landmark $1,287.50. 1535709's counterclaim was
+            //     </div>
+            //     <div class="result">
+            //       <div class="result-title"><a href="">Landmark II Inc v 1535709 Ontario Limited</a></div>
+            //       <div class="result-answer">
+            //         The trial judge found that 1535709 had breached
+            //         the contract by failing to pay and that Landmark
+            //         was not obligated to continue its work without
+            //         payment. The trial judge found that Landmark's
+            //         work as of the date of abandonment was valued at
+            //         $16,000 and, after deducting the amount of the
+            //         first payment, she determined that 1535709 owed
+            //         Landmark $1,287.50. 1535709's counterclaim was
+            //         dismissed. On appeal, the Divisional Court upheld
+            //       </div>
+            //     </div>
+            //   </div>
+            // </div>
 
 window.onload = function() {
   show_cases(current_contents);
   show_path(current_path);
+
+  var new_folder_btn = $('#new-folder');
+  new_folder_btn.clickover({
+    html: true,
+    global_close: true,
+    esc_close: true,
+    placement: 'bottom',
+    content: "<form id='new_folder_form'>" +
+                "<input id='new_folder_name_input' type='text' autofocus='autofocus' placeholder='New Folder Name'>" +
+              "</form>",
+    onShown: function() {
+      $("#new_folder_form").submit(function(event) {
+        event.preventDefault();
+
+        var new_folder_name = $("#new_folder_name_input").val();
+        create_new_folder(new_folder_name);
+
+        $(".popover").fadeOut(200, function() {
+          new_folder_btn.removeAttr('data-clickover-open');
+          new_folder_btn.removeAttr('aria-describedby');
+          $(".popover").remove();
+        });
+      });
+    }
+  });
 };
+
+String.prototype.width = function(font) {
+  var f = font || '12px arial',
+      o = $('<div>' + this + '</div>')
+            .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': f})
+            .appendTo($('body')),
+      w = o.width();
+
+  o.remove();
+
+  return w;
+}
 
 /*
         .row
