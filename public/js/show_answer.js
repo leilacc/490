@@ -46,6 +46,7 @@ var get_popover_content = function(id) {
            "<span class='folder-link'>" +
              "<a class='folder-link' data-dismiss='clickover' onclick='save_case(" + id + ", \"Tercon\")'>Tercon</a>" +
             "</span>" +
+           "<span class='folder-link'>" +
              "<a class='folder-link' data-dismiss='clickover' onclick='save_case(" + id + ", \"Landmark vs Ontario\")'>Landmark vs Ontario</a>" +
             "</span>";
   return new_folder_form + folder_links;
