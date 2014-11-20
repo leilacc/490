@@ -117,6 +117,7 @@ function get_panel(title, answers) {
               '</span>' +
             '</div>' +
           '</div>';
+  return panel;
 }
 
 function show_prediction(case_answers, context_answers) {
