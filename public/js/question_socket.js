@@ -15,34 +15,28 @@ var search = function() {
       return;
   }
 
-  $.post("/ask", {"question": question, "currentPath[]": []}).done(function(data) {
-    var question = data['question'];
-    var answers = data['answers'];
-
-    pushNewQuestion(question, answers);
-
-    var lowerq = question.toLowerCase();
-    if (lowerq.startsWith("what is the chance of") ||
-        lowerq.startsWith("what are the chances of")
-      ) {
-      // Show prediction result
-      predict(question, answers);
-    } else {
-      // Show regular answers
-      show_answers(question, answers);
-    }
-
-    spin_div.hide();
-  });
-
+  results.empty();
   spin_div.show();
   input.blur();
-  results.empty();
-  return false;
-}
 
-function predict(question, answers) {
-  console.log(question);
+  var lowerq = question.toLowerCase();
+  if (lowerq.startsWith("how likely")) {
+    // Get prediction
+    predict(question);
+  } else {
+    // Get regular answers
+    $.post("/ask", {"question": question, "currentPath[]": []}).done(
+        function(data) {
+      var question = data['question'];
+      var answers = data['answers'];
+
+      show_answers(question, answers);
+      spin_div.hide();
+      pushNewQuestion(question, answers);
+    });
+  }
+
+  return false;
 }
 
 // color animations

@@ -8,7 +8,7 @@ var show_answers = function(question, answers) {
 
   var question_obj = str_to_obj_of_words(question);
   for(var i = 0; i < answers.length; i++) {
-    results.append(gen_result(answers[i].evidence.title,
+    results.append(gen_result_row(answers[i].evidence.title,
                               highlighted_answer(answers[i].evidence.text,
                                                  question_obj),
                               answers[i].confidence,
@@ -41,9 +41,11 @@ var get_popover_content = function(id) {
                             "' placeholder='New folder' autofocus='autofocus'>" +
                         "</form>";
   var folder_links  = "<span class='folder-link'>" +
-             "<a class='folder-link' data-dismiss='clickover' onclick='save_case(" + id + ", \"Tercon\")'>Tercon</a>" +
+             "<a class='folder-link' data-dismiss='clickover' onclick='save_case(" + id + ", \"Players vs CHL\")'>Players vs CHL</a>" +
             "</span>" +
            "<span class='folder-link'>" +
+             "<a class='folder-link' data-dismiss='clickover' onclick='save_case(" + id + ", \"Tercon\")'>Tercon</a>" +
+            "</span>" +
              "<a class='folder-link' data-dismiss='clickover' onclick='save_case(" + id + ", \"Landmark vs Ontario\")'>Landmark vs Ontario</a>" +
             "</span>";
   return new_folder_form + folder_links;
@@ -64,7 +66,7 @@ function get_canlii_href(title) {
          '/doc/' + year + '/' + ycn + '/' + ycn + '.html';
 }
 
-var gen_result = function(title, answer, confidence, id) {
+var gen_result_row = function(title, answer, confidence, id) {
   confidence = Math.round(confidence * 100);
   if (confidence < MIN_CONFIDENCE_LVL) {
     return
@@ -82,16 +84,7 @@ var gen_result = function(title, answer, confidence, id) {
               '</a>' +
             '</div>' +
             '<div class="col-lg-8">' +
-              '<div class="result">' +
-                '<div class="result-title">' +
-                  '<a href="' + href + '" target="_blank">' +
-                    title +
-                  '</a>' +
-                '</div>' +
-                '<div class="result-answer">' +
-                  answer +
-                '</div>' +
-              '</div>' +
+              gen_result(href, title, answer, true) +
             '</div>' +
             '<div class="col-lg-2 pin-col">' +
               '<span class="result-thumb-tack" id="result' + id + '">' +
@@ -103,6 +96,24 @@ var gen_result = function(title, answer, confidence, id) {
           '</div>'
          );
 };
+
+function gen_result(href, title, answer, use_result_div) {
+  var inner_result = '<div class="result-title">' +
+                        '<a href="' + href + '" target="_blank">' +
+                          title +
+                        '</a>' +
+                      '</div>' +
+                      '<div class="result-answer">' +
+                        answer +
+                      '</div>';
+  if (use_result_div) {
+    return '<div class="result">' +
+              inner_result +
+            '</div>';
+  } else {
+    return inner_result
+  }
+}
 
 var highlighted_answer = function(orig_answer, question) {
   var words = orig_answer.split(" "),

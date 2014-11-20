@@ -1779,3 +1779,17 @@ button#add-case, button#save-case {
   float: right;
   margin-top: 18px;
 }
+div.likelihood {
+  font-size: 18px;
+  color: #2c3e50;
+}
+#percent {
+  font-weight: bold;
+}
+div.prediction {
+  margin-bottom: 30px;
+}
+div.predict {
+  margin-bottom: 15px;
+  padding: 0px;
+}
