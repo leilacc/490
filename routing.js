@@ -146,8 +146,9 @@ var askQuestion = function(req, res) {
     }
 
     if (HAX[question.toLowerCase()]) {
-        sleep.sleep(2);
-        res.json(HAX[question.toLowerCase()]);
+        setTimeout(function() {
+          res.json(HAX[question.toLowerCase()]);
+        }, 2000);
         return;
     }
 
