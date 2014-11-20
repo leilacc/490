@@ -20,6 +20,22 @@ var cases = [{
       "<h4>1392644 Ontario Inc. (Connor Holmes) v. Canada (National Revenue), 2013 FCA 85</h4>" +
       "However, properly understood, the approach set out in Royal Winnipeg Ballet simply emphasises the well-know principle that persons are entitled to organize their affairs and relationships as they best deem fit. The relationship of parties who enter into a contract is generally governed by that contract. Thus the parties may set out in a contract their respective duties and responsibilities, the financial terms of the services provided, and a large variety of other matters governing their relationship. However, the legal effect that results from that relationship, i.e. the legal effect of the contract, as creating an employer-employee or an independent contactor relationship, is not a matter which the parties can simply stipulate in the contract. In other words, it is insufficient to simply state in a contract that the services are provided as an independent contractor to make it so."
     }]
+  }, {
+    type: "question",
+    name: "What is an employee for tax purposes?",
+    id: next_id++,
+    answers: [{
+      title: "RC-4110-e Canada Revenue Agency",
+      text: "We ask the worker and the payer questions that will help us understand the working relationship and allow us to verify whether the intent of the parties is reflected in the facts.<br>" +
+                "These questions relate to the following elements:<br><br>" +
+                "the level of control the payer has over the worker's activities;<br>" +
+                "whether the worker provides the tools and equipment;<br>" +
+                "whether the worker can subcontract the work or hire assistants;<br>" +
+                "the degree of financial risk the worker takes;<br>" +
+                "the degree of responsibility for investment and management the worker holds;<br>" +
+                "the worker's opportunity for profit; and<br>" +
+                "any other relevant factors, such as written contracts."
+    }]
   }]
 }, {
   type: "folder",
@@ -60,19 +76,19 @@ var cases = [{
 var root_folder = {
   type: "folder",
   id: 0,  
-  name: "Yana Davis",
+  name: "Leila Chan Currie",
   children: cases
 }
 
 var current_contents = cases;
-var current_path = [{id: 0, name: "Yana Davis"}];
+var current_path = [{id: 0, name: "Leila Chan Currie"}];
 
 var cases_container = $('#saved-cases'),
   path_div = $("#path");
 
 var get_name_width = function(name) {
   var base_width = name.width("18px helvetica neue");
-  return (name === root_folder.name.toUpperCase()) ? base_width : base_width + 40; 
+  return (name === root_folder.name.toUpperCase()) ? base_width + 10 : base_width + 40; 
 }
 
 var gen_path_part = function(index, path_part) {
