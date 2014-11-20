@@ -82,6 +82,7 @@ function show_likelihood(likelihood) {
          );
 }
 
+var keywords = str_to_obj_of_words('employee employees employer player players wage contract contractors wages pay paid overtime vacation league standard');
 function get_panel(title, answers) {
   panel = '<div class="row">' +
             '<div class="col-lg-2">' +
@@ -96,13 +97,13 @@ function get_panel(title, answers) {
                       '</a>' +
                     '</h4>' +
                   '</div>' +
-                  '<div id="collapse' + title + '" class="panel-collapse collapse in">' +
+                  '<div id="collapse' + title + '" class="panel-collapse collapse">' +
                     '<div class="panel-body">';
   for (i = 0; i < answers.length; i++) {
     if (i == 0) {
-      panel = panel + gen_result(answers[i][0], answers[i][1], answers[i][2], false);
+      panel = panel + gen_result(answers[i][0], answers[i][1], highlighted_answer(answers[i][2], keywords), false);
     } else {
-      panel = panel + gen_result(answers[i][0], answers[i][1], answers[i][2], true);
+      panel = panel + gen_result(answers[i][0], answers[i][1], highlighted_answer(answers[i][2], keywords), true);
     }
   }
 
