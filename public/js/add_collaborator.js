@@ -42,14 +42,3 @@ var get_acl_content = function(id) {
                         "</span>";
   return new_collab_form + current_collabs;
 }
-
-  i = 0;
-    var acl = $('#acl' + i);
-    acl.clickover({
-      html: true,
-      global_close: true,
-      esc_close: true,
-      placement: 'bottom',
-      content: get_acl_content(i),
-      onShown: function() {setClickoverHandlers($(this)[0]['$element'][0]['id'].replace( /^\D+/g, ''))}
-    });
