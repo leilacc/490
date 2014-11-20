@@ -66,6 +66,7 @@ function get_relevant_answers(questions) {
 }
 
 function show_likelihood(likelihood) {
+  var id=1;
   return ('<div class="row">' +
             '<div class="col-lg-2">' +
             '</div>' +
@@ -76,6 +77,13 @@ function show_likelihood(likelihood) {
                 ' likely that the court will define CHL players ' +
                 'as employees.' +
               '</div>' +
+            '</div>' +
+            '<div class="col-lg-2 pin-col">' +
+              '<span class="result-thumb-tack" id="result' + id + '">' +
+                '<a href="#" id="thumbtack' + id + '" class="thumbtack" rel="clickover">' +
+                  '<i class="fa fa-thumb-tack fa-lg"></i>' +
+                '</a>' +
+              '</span>' +
             '</div>' +
           '</div>'
          );
@@ -116,6 +124,16 @@ function show_prediction(case_answers, context_answers) {
   prediction = prediction.concat(get_panel('Evidence', case_answers));
   prediction = prediction.concat(get_panel('Context', context_answers));
   results.append(prediction);
+
+  var thumbtack = $('#thumbtack' + '1');
+  thumbtack.clickover({
+    html: true,
+    global_close: true,
+    esc_close: true,
+    placement: 'bottom',
+    content: get_popover_content(i),
+    onShown: function() {setClickoverHandlers($(this)[0]['$element'][0]['id'].replace( /^\D+/g, ''))}
+  });
 }
 
 function sleep(milliseconds) {
