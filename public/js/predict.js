@@ -124,6 +124,16 @@ function show_prediction(case_answers, context_answers) {
   prediction = prediction.concat(get_panel('Evidence', case_answers));
   prediction = prediction.concat(get_panel('Context', context_answers));
   results.append(prediction);
+
+  var thumbtack = $('#thumbtack' + '0');
+  thumbtack.clickover({
+    html: true,
+    global_close: true,
+    esc_close: true,
+    placement: 'bottom',
+    content: get_popover_content(i),
+    onShown: function() {setClickoverHandlers($(this)[0]['$element'][0]['id'].replace( /^\D+/g, ''))}
+  });
 }
 
 function sleep(milliseconds) {
