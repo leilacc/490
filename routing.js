@@ -14,7 +14,9 @@ var views = {
   '/search': {view: 'search', requiresAuth: true},
   '/report': {view: 'report', requiresAuth: true},
   '/cases': {view: 'cases', requiresAuth: true},
-  '/history': {view: 'history', requiresAuth: true}
+  '/history': {view: 'history', requiresAuth: true},
+  '/case': {view: 'add_case', requiresAuth: true},
+  '/case/playersvschl': {view: 'show_case', requiresAuth: true},
 };
 
 var renderOnGet = function(path, view, app) {

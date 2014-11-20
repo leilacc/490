@@ -553,6 +553,7 @@ input[type="color"],
   font-size: 16px;
   font-weight: normal;
   color: #7f8c8d;
+  color: #2c3e50;
 }
 a:hover,
 button:hover,
@@ -947,7 +948,7 @@ section * {
   margin-top: 36px;
 }
 .header-11-sub {
-  padding-top: 70px;
+  padding-top: 48px;
   padding-bottom: 110px;
   color: #bdc3c7;
   position: relative;
@@ -1556,7 +1557,7 @@ section * {
   padding-top: 140px;
 }
 #results {
-  margin-top: 10px;
+  margin-top: 18px;
 }
 .result {
   margin-top: 20px;
@@ -1777,4 +1778,60 @@ div.case .folder_icon {
   height: 40px;
   float: left;
   background-image: url("../../../img/folder.png");
+}
+
+
+select {
+  border: 1px solid #ddd;
+  color: #666;
+  margin-left: 10px;
+  transition: 0.2s;
+}
+select:hover {
+  background-color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+div#current-case {
+  background-color: rgb(248, 248, 248);
+  border-radius: 7px;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+  padding: 11px 12px 11px 14px;
+}
+div#searchbar {
+  padding: 0px;
+}
+span.case-options {
+  float: right;
+  margin-left: 14px;
+}
+span.input-group-addon {
+  border: none;
+}
+span.input-label {
+  color: #7f8c8d;
+  font-size: 16px;
+}
+form#new-case {
+  margin-top: 28px;
+}
+textarea, input.new-case {
+  border: 2px solid rgb(189, 195, 199);
+  border-radius: 7px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  width: 100%;
+}
+.new-case {
+  margin-top: 22px;
+  width: 100%
+}
+button#add-case:hover, button#save-case:hover {
+  background-color: #48C9B0;
+}
+button#add-case, button#save-case {
+  background-color: #1abc9c;
+  float: right;
+  margin-top: 18px;
 }

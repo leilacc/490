@@ -49,12 +49,28 @@ var get_popover_content = function(id) {
   return new_folder_form + folder_links;
 };
 
+function get_canlii_href(title) {
+  var tokens = title.split(" ");
+  var year = tokens[2];
+  var court = tokens[3].toLowerCase();
+  var num = tokens[4];
+  if (court.length == 4) {
+    var jurisdiction = court.substr(0, 2);
+  } else {
+    var jurisdiction = 'ca';
+  }
+  var ycn = year + court + num;
+  return 'http://www.canlii.org/en/' + jurisdiction + '/' + court +
+         '/doc/' + year + '/' + ycn + '/' + ycn + '.html';
+}
+
 var gen_result = function(title, answer, confidence, id) {
   confidence = Math.round(confidence * 100);
   if (confidence < MIN_CONFIDENCE_LVL) {
     return
   }
 
+  var href = get_canlii_href(title);
   return ('<div class="row">' +
             '<div class="col-lg-1">' +
             '</div>' +
@@ -68,7 +84,7 @@ var gen_result = function(title, answer, confidence, id) {
             '<div class="col-lg-8">' +
               '<div class="result">' +
                 '<div class="result-title">' +
-                  '<a href="https://www.canlii.org/en/ca/scc/doc/2010/2010scc4/2010scc4.html">' +
+                  '<a href="' + href + '" target="_blank">' +
                     title +
                   '</a>' +
                 '</div>' +

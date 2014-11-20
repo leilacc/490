@@ -9,7 +9,32 @@ body
       .container
         .row
           .col-lg-2
-          .col-lg-8
+          .col-lg-8#current-case
+            | Current Case:
+            select(name='current-case')
+              option(value='na')
+                | --
+              optgroup(label='')
+              optgroup(label='Recent')
+                option(value='Players vs CHL', selected="selected")
+                  | Players vs CHL
+                option(value='Tercon')
+                  | Tercon
+              optgroup(label='')
+              optgroup(label='All')
+                option(value='Alfred vs Manning')
+                  | Alfred vs Manning
+                option(value='Ontario vs Landscaping Ltd')
+                  | Ontario vs Landscaping Ltd
+            span.case-options
+              a(href='/case')
+                | Add new case
+            span.case-options
+              a(href='/case/playersvschl')
+                | See case details
+        .row
+          .col-lg-2
+          .col-lg-8#searchbar
             form
               .input-group
                 input.form-control(type='text', id='question',
