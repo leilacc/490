@@ -108,6 +108,7 @@ function get_panel(title, answers) {
 
   // close panel-body, collapseOne, panel, accordian, col, row
   panel = panel + '</div></div></div></div></div>';
+  var id=0;
   panel = panel + 
             '<div class="col-lg-2 pin-col">' +
               '<span class="result-thumb-tack" id="result' + id + '">' +
