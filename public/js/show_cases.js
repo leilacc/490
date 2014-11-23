@@ -257,9 +257,9 @@ window.onload = function() {
     html: true,
     global_close: true,
     esc_close: true,
-    placement: 'bottom',
+    placement: 'right',
     content: "<form id='new_folder_form'>" +
-                "<input id='new_folder_name_input' type='text' autofocus='autofocus' placeholder='New Folder Name'>" +
+                "<input id='new_folder_name_input' type='text' autofocus='autofocus' placeholder='New Case Name'>" +
               "</form>",
     onShown: function() {
       $("#new_folder_form").submit(function(event) {
