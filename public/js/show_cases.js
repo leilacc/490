@@ -76,15 +76,15 @@ var cases = [{
 var root_folder = {
   type: "folder",
   id: 0,  
-  name: "Leila Chan Currie",
+  name: "My Cases",
   children: cases
 }
 
 var current_contents = cases;
-var current_path = [{id: 0, name: "Leila Chan Currie"}];
+var current_path = [{id: 0, name: "My Cases"}];
 
 var cases_container = $('#saved-cases'),
-  path_div = $("#path");
+    path_div = $("#path");
 
 var get_name_width = function(name) {
   var base_width = name.width("18px helvetica neue");
@@ -92,13 +92,13 @@ var get_name_width = function(name) {
 }
 
 var gen_path_part = function(index, path_part) {
-  var name = path_part.name.toUpperCase();
+  var name = path_part.name;
   var id = path_part.id;
 
-  return ('<div class="path-part" style="width: ' + get_name_width(name) + 'px">' +
-            (index == 0 ? '' : '<div class="separator">&gt;</div>') +
-            '<div class="name" onclick="go_up_to_folder(' + id + ')">' + name + '</div>' +
-          '</div>')
+  return ('<span class="path-part">' +
+            (index == 0 ? '' : '<span class="separator">&gt;</span>') +
+            '<span class="name" onclick="go_up_to_folder(' + id + ')">' + name + '</span>' +
+          '</span>')
 };
 
 var show_path = function(path) {
@@ -172,7 +172,7 @@ var show_cases = function(cases) {
       html: true,
       global_close: true,
       esc_close: true,
-      placement: 'bottom',
+      placement: 'right',
       content: get_acl_content(i),
       onShown: function() {setClickoverHandlers($(this)[0]['$element'][0]['id'].replace( /^\D+/g, ''))}
     });
@@ -181,23 +181,30 @@ var show_cases = function(cases) {
 
 var gen_case = function(i, case_to_gen) {
   if (case_to_gen.type == 'folder')
-    return ('<div class="row case folder panel">' +
-      '<div class="folder_icon"></div>' +
+    return ('<div class="row folder">' +
+      '<div class="col-lg-2"></div>' +
+      '<div class="col-lg-8 case">' +
+      '<div class="folder_icon"><i class="fa fa-folder"></i></div>' +
       '<a href="#" onclick="enter_folder(' + case_to_gen.id + ')">' + case_to_gen.name + '</a>' +
       '<a href="#" id="acl' + i + '" rel="clickover" class="acl" data-original-title="" title=""><i class="fa fa-users fa-lg"></i></a>' +
-    '</div>');
+    '</div></div>');
 
   var collapse_div_id = "collapse" + i;
-  return '<div class="row case panel panel-default">' +
+  return '<div class="row">' +
     // '<div class="icon question_icon"></div>' +
-    '<div class="panel-heading">' +
-      '<h4 class="panel-title">' +
-        '<a data-toggle="collapse" data-target="#' + collapse_div_id + '" class="saved-q">' + case_to_gen.name + '</a></h4>' +
-    '</div>' +
-    '<div id="' + collapse_div_id + '" class="panel-collapse collapse">' +
-      '<div class="panel-body">' +
-        gen_answers(case_to_gen) +
-      '</div>' +
+      '<div class="col-lg-2"></div>' +
+      '<div class="col-lg-8">' +
+           '<div class="panel panel-default">' +
+        '<div class="panel-heading">' +
+          '<h4 class="panel-title">' +
+            '<a data-toggle="collapse" data-target="#' + collapse_div_id + '" class="saved-q">' + case_to_gen.name + '</a></h4>' +
+        '</div>' +
+        '<div id="' + collapse_div_id + '" class="panel-collapse collapse">' +
+          '<div class="panel-body">' +
+            gen_answers(case_to_gen) +
+          '</div>' +
+        '</div>' + 
+    '</div>' + 
     '</div>' + 
   '</div>';
 };

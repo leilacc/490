@@ -1712,8 +1712,7 @@ div.header {
 }
 a#new-folder {
   float: right;
-  /*margin-right: 40px;*/
-  /*margin-top: 10px;*/
+  margin-top: -16px;
 }
 
 a#new-folder i {
@@ -1721,36 +1720,41 @@ a#new-folder i {
 }
 
 /* PATH */
-div#path {
-  height: 50px;
+span.path-part {
+  font-size: 18px;
   float: left;
-  position: relative;
-  top: 12%;
 }
-
-div.path-part {
-  float: left;
-  width: 200px;
-}
-div.path-part .separator {
+span.path-part .separator {
   float: left;
   margin-right: 10px;
   margin-left: 10px;
-  margin-top: -12px;
-  font-size: 24pt;
-  color: #16a085;
+  margin-top: -2px;
 }
-div.path-part .name {
-  color: #357ebd;
-  font-size: 18px;
+span.path-part .name {
+  cursor: pointer;
+  color: #34495e;
   /*margin-top: 12px;*/
 }
 
 /* CASE */
+#saved-cases {
+  margin-top: 28px;
+}
+
+.fa-users {
+  font-size: 22px !important;
+}
 
 div.case {
-  margin-bottom: 20px;
-  width: 800px;
+  box-shadow: none;
+  overflow: visible !important;
+  padding: 6px 16px;
+  transition: 0.1s;
+}
+
+div.case:hover {
+  background-color: #fafafa;
+  transition: 0.1s;
 }
 
 div.case p {
@@ -1761,10 +1765,8 @@ div.case p {
 
 div.folder a {
   font-size: 20px;
-  /*margin-top: 10px;*/
+  margin-top: 4px;
   margin-left: 25px;
-  position: relative;
-  top: 8px;
 }
 
 div.case .panel-title a {
@@ -1774,10 +1776,9 @@ div.case .panel-title a {
 }
 
 div.case .folder_icon {
-  width: 40px;
-  height: 40px;
+  color: #d6d6d6;
   float: left;
-  background-image: url("../../../img/folder.png");
+  font-size: 26px;
 }
 
 
