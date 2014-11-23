@@ -1659,8 +1659,10 @@ input.new_folder {
   font-size: 15px;
 }
 span.folder-link {
+  color: #34495e;
   display: block;
-  padding-left: 7px;
+  font-size: 15px;
+  padding-left: 6px;
   padding-top: 4px;
 }
 span.pin-name {
@@ -1858,4 +1860,7 @@ div.prediction {
 div.predict {
   margin-bottom: 15px;
   padding: 0px;
+}
+.new_collab {
+  margin: 10px auto 0px;
 }
