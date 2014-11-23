@@ -9,16 +9,18 @@ var cases = [{
     name: "How likely is the court to define CHL players as employees of the League?",
     id: next_id++,
     answers: [{
-      title: "Outcome",
-      text: "It is approximately 74% likely that the court will define CHL players as employees.<br><br>"
+      section: "Outcome",
+      text: "It is approximately 74% likely that the court will define CHL players as employees."
     }, {
-      title: "Evidence",
-      text: "<h4>McCrimmon Holdings Ltd. v. M.N.R., 2000 CanLII 460 (TCC)</h4>" +
-      "The payment for playing hockey is modest but all their expenses are covered, including room and board. However, the requirement to play hockey is not inextricably bound to a condition of scholarship as may be the case with a university since attendance at a post-secondary educational institution was not mandatory for remaining on the roster. In the case of Charron v. M.N.R., [1994] T.C.J. No. 47 - Archambault T.C.J. heard an appeal from a determination by the Minister that the appellant - a graduate student employed by Laval University on a research project - was not engaged in insurable employment because she was receiving university credit for the work. Judge Archambault held that the existence of an academic benefit did not prevent the existence of a contract of employment and at paragraph 14 of his judgment stated:\"...Further, the fact that s. 3(1)(a) refers to employment \" under any express or implied contract of service or apprenticeship, written or oral, whether the earnings of the employed person are received from the employer or some other person\" indicates that Parliament clearly intended the idea of insurable employment to be as wide as possible for the purposes of the Act.\"<br>" +
-      "<h4>671122 Ontario Ltd. v. Sagaz Industries Canada Inc., [2001] 2 SCR 983, 2001 SCC 59</h4>" +
-      "There is no one conclusive test which can be universally applied to determine whether a person is an employee or an independent contractor.  What must always occur is a search for the total relationship of the parties.  The central question is whether the person who has been engaged to perform the services is performing them as a person in business on his own account.  In making this determination, the level of control the employer has over the worker’s activities will always be a factor.  However, other factors to consider include whether the worker provides his or her own equipment, whether the worker hires his or her own helpers, the degree of financial risk taken by the worker, the degree of responsibility for investment and management held by the worker, and the worker’s opportunity for profit in the performance of his or her tasks." +
-      "<h4>1392644 Ontario Inc. (Connor Holmes) v. Canada (National Revenue), 2013 FCA 85</h4>" +
-      "However, properly understood, the approach set out in Royal Winnipeg Ballet simply emphasises the well-know principle that persons are entitled to organize their affairs and relationships as they best deem fit. The relationship of parties who enter into a contract is generally governed by that contract. Thus the parties may set out in a contract their respective duties and responsibilities, the financial terms of the services provided, and a large variety of other matters governing their relationship. However, the legal effect that results from that relationship, i.e. the legal effect of the contract, as creating an employer-employee or an independent contactor relationship, is not a matter which the parties can simply stipulate in the contract. In other words, it is insufficient to simply state in a contract that the services are provided as an independent contractor to make it so."
+      section: "Evidence",
+      title: "McCrimmon Holdings Ltd. v. M.N.R., 2000 CanLII 460 (TCC)",
+      text: "The payment for playing hockey is modest but all their expenses are covered, including room and board. However, the requirement to play hockey is not inextricably bound to a condition of scholarship as may be the case with a university since attendance at a post-secondary educational institution was not mandatory for remaining on the roster. In the case of Charron v. M.N.R., [1994] T.C.J. No. 47 - Archambault T.C.J. heard an appeal from a determination by the Minister that the appellant - a graduate student employed by Laval University on a research project - was not engaged in insurable employment because she was receiving university credit for the work. Judge Archambault held that the existence of an academic benefit did not prevent the existence of a contract of employment and at paragraph 14 of his judgment stated:\"...Further, the fact that s. 3(1)(a) refers to employment \" under any express or implied contract of service or apprenticeship, written or oral, whether the earnings of the employed person are received from the employer or some other person\" indicates that Parliament clearly intended the idea of insurable employment to be as wide as possible for the purposes of the Act.\""},
+      {
+      title: "671122 Ontario Ltd. v. Sagaz Industries Canada Inc., [2001] 2 SCR 983, 2001 SCC 59",
+      text: "There is no one conclusive test which can be universally applied to determine whether a person is an employee or an independent contractor.  What must always occur is a search for the total relationship of the parties.  The central question is whether the person who has been engaged to perform the services is performing them as a person in business on his own account.  In making this determination, the level of control the employer has over the worker’s activities will always be a factor.  However, other factors to consider include whether the worker provides his or her own equipment, whether the worker hires his or her own helpers, the degree of financial risk taken by the worker, the degree of responsibility for investment and management held by the worker, and the worker’s opportunity for profit in the performance of his or her tasks." },
+      {
+        title: "1392644 Ontario Inc. (Connor Holmes) v. Canada (National Revenue), 2013 FCA 85",
+        text: "However, properly understood, the approach set out in Royal Winnipeg Ballet simply emphasises the well-know principle that persons are entitled to organize their affairs and relationships as they best deem fit. The relationship of parties who enter into a contract is generally governed by that contract. Thus the parties may set out in a contract their respective duties and responsibilities, the financial terms of the services provided, and a large variety of other matters governing their relationship. However, the legal effect that results from that relationship, i.e. the legal effect of the contract, as creating an employer-employee or an independent contactor relationship, is not a matter which the parties can simply stipulate in the contract. In other words, it is insufficient to simply state in a contract that the services are provided as an independent contractor to make it so."
     }]
   }, {
     type: "question",
@@ -213,8 +215,19 @@ var gen_answers = function(case_to_gen) {
   result = "";
   var answers = case_to_gen.answers;
   for (var i = 0; i < answers.length; i++) {
-    result += '<div class="result-title"><a href="">' + answers[i].title + '</a></div>' +
-      '<div class="result-answer">' + answers[i].text + '</div>';
+    if (i > 0) {
+      result += "<div class='result'>";
+    }
+    if (answers[i].section) {
+      result += '<h4>' + answers[i].section + '</h4>';
+    }
+    if (answers[i].title) {
+      result += '<div class="result-title"><a href="">' + answers[i].title + '</a></div>';
+    }
+    result += '<div class="result-answer">' + answers[i].text + '</div>';
+    if (i > 0) {
+      result += "</div>";
+    }
   }
   return result;
 };
