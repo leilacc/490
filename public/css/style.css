@@ -1727,7 +1727,7 @@ a#new-folder i {
 
 /* PATH */
 span.path-part {
-  font-size: 18px;
+  font-size: 20px;
   float: left;
 }
 span.path-part .separator {
