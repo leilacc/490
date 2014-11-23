@@ -1849,3 +1849,6 @@ div.predict {
   margin-bottom: 15px;
   padding: 0px;
 }
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: #2c3e50;
+}
