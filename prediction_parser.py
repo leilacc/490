@@ -1,8 +1,10 @@
 import urllib2
+import json
 import helpers
 
 GENERAL_QUESTIONS = ['What cases involve TOPICSs?',]
-NP_QUESTIONS = ['What is the legal test for SING_DET NP?']
+NP_QUESTIONS = ['What is the legal test for SING_DET NP?',
+                'What is the definition of SING_DET NP?']
 
 FUNCTION_NPS = set(['court', 'judge', 'appellant', 'plaintiff', 'defendant'])
 FUNCTION_VPS = set(['define', 'determine', 'decide', 'rule', 'argue'])
@@ -33,22 +35,35 @@ def check_if_legal_term(np):
   content = urllib2.urlopen(url).read()
   return 'class="definition"' in content
 
-def generate_questions(prediction_question):
-  (np_topics, vp_topics) = get_topics(prediction_question)
-
+def generate_general_questions(np_topics):
   if len(np_topics) != 2:
     general_questions = [question.replace('TOPICS', 's, '.join(np_topics))
                          for question in GENERAL_QUESTIONS]
   else:
-    general_questions = [question.replace('TOPICS', ' and '.join(np_topics))
+    general_questions = [question.replace('TOPICS', 's and '.join(np_topics))
                          for question in GENERAL_QUESTIONS]
+  return general_questions
 
+def generate_np_questions(np_topics):
   np_questions = []
   for np in np_topics:
     if not check_if_legal_term(np):
       continue
-    np_questions.extend([question.replace('SING_DET', get_singular_determiner(np)).replace('NP', np) for question in NP_QUESTIONS])
-  return (general_questions, np_questions)
+    np_questions.extend([
+      question.replace('SING_DET', get_singular_determiner(np))
+              .replace('NP', np)
+      for question in NP_QUESTIONS
+    ])
+  return np_questions
+
+def generate_all_questions(prediction_question):
+  (np_topics, vp_topics) = get_topics(prediction_question)
+
+  return {'general_questions': generate_general_questions(np_topics),
+          'np_question': generate_np_questions(np_topics)}
+
+def question_server(json_prediction_question):
+  return json.dump(generate_all_questions(json.loads(json_prediction_question)))
 
 if __name__ == '__main__':
-  print generate_questions('how likely is the court to define CHL players as employees?')
+  print generate_all_questions('how likely is the court to define CHL players as employees?')

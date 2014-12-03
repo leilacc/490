@@ -11,33 +11,32 @@ var cases = [{
     id: next_id++,
     answers: [{
       section: "Outcome",
-      text: "It is approximately 74% likely that the court will define CHL players as employees."
+      text: "It is approximately 68% likely that the court will define CHL players as employees."
     }, {
       section: "Evidence",
-      title: "McCrimmon Holdings Ltd. v. M.N.R., 2000 CanLII 460 (TCC)",
-      text: "The payment for playing hockey is modest but all their expenses are covered, including room and board. However, the requirement to play hockey is not inextricably bound to a condition of scholarship as may be the case with a university since attendance at a post-secondary educational institution was not mandatory for remaining on the roster. In the case of Charron v. M.N.R., [1994] T.C.J. No. 47 - Archambault T.C.J. heard an appeal from a determination by the Minister that the appellant - a graduate student employed by Laval University on a research project - was not engaged in insurable employment because she was receiving university credit for the work. Judge Archambault held that the existence of an academic benefit did not prevent the existence of a contract of employment and at paragraph 14 of his judgment stated:\"...Further, the fact that s. 3(1)(a) refers to employment \" under any express or implied contract of service or apprenticeship, written or oral, whether the earnings of the employed person are received from the employer or some other person\" indicates that Parliament clearly intended the idea of insurable employment to be as wide as possible for the purposes of the Act.\""},
-      {
+      question: "What is the legal test that determines if a person is an employee?",
       title: "671122 Ontario Ltd. v. Sagaz Industries Canada Inc., [2001] 2 SCR 983, 2001 SCC 59",
+      url: "http://www.canlii.org/en/ca/scc/doc/2001/2001scc59/2001scc59.html",
       text: "There is no one conclusive test which can be universally applied to determine whether a person is an employee or an independent contractor.  What must always occur is a search for the total relationship of the parties.  The central question is whether the person who has been engaged to perform the services is performing them as a person in business on his own account.  In making this determination, the level of control the employer has over the worker’s activities will always be a factor.  However, other factors to consider include whether the worker provides his or her own equipment, whether the worker hires his or her own helpers, the degree of financial risk taken by the worker, the degree of responsibility for investment and management held by the worker, and the worker’s opportunity for profit in the performance of his or her tasks." },
       {
-        title: "1392644 Ontario Inc. (Connor Holmes) v. Canada (National Revenue), 2013 FCA 85",
-        text: "However, properly understood, the approach set out in Royal Winnipeg Ballet simply emphasises the well-know principle that persons are entitled to organize their affairs and relationships as they best deem fit. The relationship of parties who enter into a contract is generally governed by that contract. Thus the parties may set out in a contract their respective duties and responsibilities, the financial terms of the services provided, and a large variety of other matters governing their relationship. However, the legal effect that results from that relationship, i.e. the legal effect of the contract, as creating an employer-employee or an independent contactor relationship, is not a matter which the parties can simply stipulate in the contract. In other words, it is insufficient to simply state in a contract that the services are provided as an independent contractor to make it so."
-    }]
+      question: "Does signing a contract make someone a contractor?",
+      title: "1392644 Ontario Inc. (Connor Holmes) v. Canada (National Revenue), 2013 FCA 85",
+      url: "http://www.canlii.org/en/ca/fca/doc/2013/2013fca85/2013fca85.html",
+      text: "However, properly understood, the approach set out in Royal Winnipeg Ballet simply emphasises the well-know principle that persons are entitled to organize their affairs and relationships as they best deem fit. The relationship of parties who enter into a contract is generally governed by that contract. Thus the parties may set out in a contract their respective duties and responsibilities, the financial terms of the services provided, and a large variety of other matters governing their relationship. However, the legal effect that results from that relationship, i.e. the legal effect of the contract, as creating an employer-employee or an independent contactor relationship, is not a matter which the parties can simply stipulate in the contract. In other words, it is insufficient to simply state in a contract that the services are provided as an independent contractor to make it so."
+      },
+      {
+      question: "Must players with scholarships be paid minimum wage?",
+      title: "McCrimmon Holdings Ltd. v. M.N.R., 2000 CanLII 460 (TCC)",
+      url: "http://www.canlii.org/en/ca/tcc/doc/2000/2000canlii460/2000canlii460.html",
+      text: 'The payment for playing hockey is modest but all their expenses are covered, including room and board. However, the requirement to play hockey is not inextricably bound to a condition of scholarship as may be the case with a university since attendance at a post-secondary educational institution was not mandatory for remaining on the roster. In the case of Charron v. M.N.R., [1994] T.C.J. No. 47 - Archambault T.C.J. heard an appeal from a determination by the Minister that the appellant - a graduate student employed by Laval University on a research project - was not engaged in insurable employment because she was receiving university credit for the work. Judge Archambault held that the existence of an academic benefit did not prevent the existence of a contract of employment and at paragraph 14 of his judgment stated:"...Further, the fact that s. 3(1)(a) refers to employment " under any express or implied contract of service or apprenticeship, written or oral, whether the earnings of the employed person are received from the employer or some other person" indicates that Parliament clearly intended the idea of insurable employment to be as wide as possible for the purposes of the Act.""...Further, the fact that s. 3(1)(a) refers to employment \" under any express or implied contract of service or apprenticeship, written or oral, whether the earnings of the employed person are received from the employer or some other person\" indicates that Parliament clearly intended the idea of insurable employment to be as wide as possible for the purposes of the Act.\"'},
+    ]
   }, {
     type: "question",
-    name: "What is an employee for tax purposes?",
+    name: "What is the definition of an employee?",
     id: next_id++,
     answers: [{
-      title: "RC-4110-e Canada Revenue Agency",
-      text: "We ask the worker and the payer questions that will help us understand the working relationship and allow us to verify whether the intent of the parties is reflected in the facts.<br>" +
-                "These questions relate to the following elements:<br><br>" +
-                "the level of control the payer has over the worker's activities;<br>" +
-                "whether the worker provides the tools and equipment;<br>" +
-                "whether the worker can subcontract the work or hire assistants;<br>" +
-                "the degree of financial risk the worker takes;<br>" +
-                "the degree of responsibility for investment and management the worker holds;<br>" +
-                "the worker's opportunity for profit; and<br>" +
-                "any other relevant factors, such as written contracts."
+      title: "Employment Standards Act, 2000, SO 2000",
+      text: "For the purposes of clause (c) of the definition of 'employee' in subsection (1), an individual receiving training from a person who is an employer is an employee of that person if the skill in which the individual is being trained is a skill used by the person's employees, unless all of the following conditions are met: 1. The training is similar to that which is given in a vocational school. 2. The training is for the benefit of the individual."
     }]
   }]
 }, {
@@ -238,6 +237,8 @@ var gen_case = function(i, case_to_gen) {
   return result;
 };
 
+var keywords_str = 'employee employees employer player players wage contract contractors wages pay paid overtime vacation league standard';
+var keywords = str_to_obj_of_words(keywords_str);
 var gen_answers = function(case_to_gen) {
   result = "";
   var answers = case_to_gen.answers;
@@ -249,9 +250,13 @@ var gen_answers = function(case_to_gen) {
       result += '<h4>' + answers[i].section + '</h4>';
     }
     if (answers[i].title) {
-      result += '<div class="result-title"><a href="">' + answers[i].title + '</a></div>';
+      result += '<div class="result-title"><a href="' + answers[i].url + '">' + answers[i].title + '</a></div>';
     }
-    result += '<div class="result-answer">' + answers[i].text + '</div>';
+    if (answers[i].question) {
+      result += '<div class="result-answer">' + highlighted_answer(answers[i].text, keywords) + '</div>';
+    } else {
+      result += '<div class="result-answer">' + answers[i].text + '</div>';
+    }
     if (i > 0) {
       result += "</div>";
     }
