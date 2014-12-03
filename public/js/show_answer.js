@@ -124,7 +124,7 @@ var highlighted_answer = function(orig_answer, question) {
     var word = words[i];
     var std_word = standardize_word(word);
     if ((std_word in question) && !(std_word in fwords) && (std_word.length > 2)) {
-      new_answer.push("<strong>"+word+"</strong>");
+      new_answer.push(word);
     } else {
       new_answer.push(word);
     }

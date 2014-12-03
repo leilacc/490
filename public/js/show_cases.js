@@ -1,4 +1,5 @@
 var next_id = 10;
+var cache = {};
 
 var cases = [{
   type: "folder",
@@ -36,6 +37,22 @@ var cases = [{
     answers: [{
       title: "Employment Standards Act, 2000, SO 2000",
       text: "For the purposes of clause (c) of the definition of 'employee' in subsection (1), an individual receiving training from a person who is an employer is an employee of that person if the skill in which the individual is being trained is a skill used by the person's employees, unless all of the following conditions are met: 1. The training is similar to that which is given in a vocational school. 2. The training is for the benefit of the individual."
+    }]
+  }, {
+    type: "question",
+    name: "How does the TCC define an employee?",
+    id: next_id++,
+    answers: [{
+      title: "Employee or Self-Employed? : Employee or Self-Employed? : Determining a worker's employment status in a province or territory other than Quebec : Step 2",
+      text: "We ask the worker and the payer questions that will help us understand the working relationship and allow us to verify whether the intent of the parties is reflected in the facts. These questions relate to the following elements: the level of control the payer has over the worker's activities; whether the worker provides the tools and equipment; whether the worker can subcontract the work or hire assistants; the degree of financial risk the worker takes; the degree of responsibility for investment and management the worker holds; the worker's opportunity for profit; and. any other relevant factors, such as written contracts. We look at the answers separately for each element and then together. We consider whether they reflect the stated intention and we decide if the actual working conditions are more consistent with a contract of service or with a contract for services."
+    }]
+  }, {
+    type: "question",
+    name: "How is the level of control of an employer calculated?",
+    id: next_id++,
+    answers: [{
+      title: "Employee or Self-Employed? : Employee or Self-Employed? : Determining a worker's employment status in the province of Quebec : Factors to consider : Relationship of subordination",
+      text: "This factor helps distinguish the employer-employee relationship from a business relationship. The relationship of subordination is the capacity, the authority, or the right of a payer to exercise a control over the worker's activities and the manner in which the work is done. Degree of control or autonomy. Consider the degree of control held by the payer or the degree of autonomy held by the worker. The actual degree of control will vary with the type of work and the skills of the worker. Determining the degree of control can be difficult when examining the employment of professionals such as engineers, doctors, and IT consultants. Because of their expertise and specialized training, they may require little or no specific direction in their daily activities. When examining the factor of control, it is necessary to focus on both the payer's control over the worker's daily activities, and the payer's influence over the worker. Payer's right to exercise control. It is the right of the payer to exercise control that is relevant, not whether the payer actually exercises this right. It is the control of a payer over a worker that is relevant, and not the control of a payer over the end result of a product or service that he or she has purchased. Indicators showing that the worker is an employee. The payer directs and controls many elements of how the work is performed (such as what, who, where, when, and how). The payer controls the worker's absences, such as sick leave or vacation leave. The payer controls the worker with respect to the results of the work and the method used to do the work. The payer creates the work schedule and establishes the worker's rules of conduct. The worker has to perform the work personally. The worker has to remit activity reports to the payer. The worker's activities are reserved to a single payer (exclusivity of services). The payer can impose disciplinary actions on a worker. The worker receives training or direction from the payer on how to perform the work. The worker accepts integration in the payer's business to have the latter benefit from his work. The parties have inserted a non-competition clause in their written contract. Indicators showing that the worker is a self-employed individual. The worker is usually free to work when and for whom he or she chooses and may provide his or her services to different payers at the same time. The worker does not have to perform the services personally. He or she can hire another party to either complete the work or help complete the work. The worker can generally choose the time and the manner the work will be performed. The worker does not need to be at the payer's premises. The worker can accept or refuse work from the payer. The working relationship between the payer and the worker does not present a degree of continuity, loyalty, security, subordination, or integration, all of which are generally associated with an employer-employee relationship."
     }]
   }]
 }, {
@@ -166,7 +183,27 @@ var show_cases = function(cases) {
   cases_container.empty();
 
   for(var i = 0; i < cases.length; i++) {
-    cases_container.append(gen_case(i, cases[i]));
+    var generated_case = $(gen_case(i, cases[i]));
+    cases_container.append(generated_case);
+
+    var highlights = store.get('highlights');
+    var textContent = generated_case.find('.result-answer');
+    if (highlights && textContent.length > 0) {
+
+      for (var j = 0; j < highlights.length; j++) {
+          if (highlights[j] === "")
+              continue;
+
+          for (var k = 0; k < textContent.length; k++) {
+            var startOffset = textContent[k].innerHTML.indexOf(highlights[j]);
+            if (startOffset !== -1) {
+              // var strongAmount = textContent[j].innerHTML.split("<strong>").length - 1;
+              var endOffset = startOffset + highlights[j].length  //+ strongAmount * ("<strong>".length + "</strong>".length);
+              highlightSelection(textContent[k].childNodes[0], startOffset, endOffset);
+            }
+          }
+        }
+    }
 
     var acl = $('#acl' + i);
     acl.clickover({
@@ -181,33 +218,39 @@ var show_cases = function(cases) {
 };
 
 var gen_case = function(i, case_to_gen) {
-  if (case_to_gen.type == 'folder')
-    return ('<div class="row folder">' +
-      '<div class="col-lg-2"></div>' +
-      '<div class="col-lg-8 case">' +
-      '<div class="folder_icon"><i class="fa fa-folder"></i></div>' +
-      '<a href="#" onclick="enter_folder(' + case_to_gen.id + ')">' + case_to_gen.name + '</a>' +
-      '<a href="#" id="acl' + i + '" rel="clickover" class="acl" data-original-title="" title=""><i class="fa fa-users fa-lg"></i></a>' +
-    '</div></div>');
+  if (cache[case_to_gen.id])
+      return cache[case_to_gen.id];
 
-  var collapse_div_id = "collapse" + i;
-  return '<div class="row">' +
-    // '<div class="icon question_icon"></div>' +
-      '<div class="col-lg-2"></div>' +
-      '<div class="col-lg-8">' +
-           '<div class="panel panel-default">' +
-        '<div class="panel-heading">' +
-          '<h4 class="panel-title">' +
-            '<a data-toggle="collapse" data-target="#' + collapse_div_id + '" class="saved-q">' + case_to_gen.name + '</a></h4>' +
-        '</div>' +
-        '<div id="' + collapse_div_id + '" class="panel-collapse collapse">' +
-          '<div class="panel-body">' +
-            gen_answers(case_to_gen) +
-          '</div>' +
+  var result = "";
+  if (case_to_gen.type == 'folder')
+    result = ('<div class="row folder" id="case-' + case_to_gen.id + '">' +
+          '<div class="col-lg-2"></div>' +
+          '<div class="col-lg-8 case">' +
+          '<div class="folder_icon"><i class="fa fa-folder"></i></div>' +
+          '<a href="#" onclick="enter_folder(' + case_to_gen.id + ')">' + case_to_gen.name + '</a>' +
+          '<a href="#" id="acl' + i + '" rel="clickover" class="acl" data-original-title="" title=""><i class="fa fa-users fa-lg"></i></a>' +
+        '</div></div>');
+  else {
+    var collapse_div_id = "collapse" + i;
+    result = '<div class="row" id="case-' + case_to_gen.id + '">' +
+          '<div class="col-lg-2"></div>' +
+          '<div class="col-lg-8">' +
+               '<div class="panel panel-default">' +
+            '<div class="panel-heading">' +
+              '<h4 class="panel-title">' +
+                '<a data-toggle="collapse" data-target="#' + collapse_div_id + '" class="saved-q">' + case_to_gen.name + '</a></h4>' +
+            '</div>' +
+            '<div id="' + collapse_div_id + '" class="panel-collapse collapse">' +
+              '<div class="panel-body">' +
+                gen_answers(case_to_gen) +
+              '</div>' +
+            '</div>' + 
         '</div>' + 
-    '</div>' + 
-    '</div>' + 
-  '</div>';
+        '</div>' + 
+      '</div>';
+  }
+
+  return result;
 };
 
 var keywords_str = 'employee employees employer player players wage contract contractors wages pay paid overtime vacation league standard';
@@ -226,7 +269,7 @@ var gen_answers = function(case_to_gen) {
       result += '<div class="result-title"><a href="' + answers[i].url + '">' + answers[i].title + '</a></div>';
     }
     if (answers[i].question) {
-      result += '<div class="result-answer">' + highlighted_answer(answers[i].text, keywords) + '</div>';
+      result += '<div class="result-answer">' + answers[i].text + '</div>';
     } else {
       result += '<div class="result-answer">' + answers[i].text + '</div>';
     }
@@ -236,35 +279,6 @@ var gen_answers = function(case_to_gen) {
   }
   return result;
 };
-
-            //   <div class="panel-body">
-            //     <div class="result-title"><a href="">Landmark II Inc v 1535709 Ontario Limited</a></div>
-            //     <div class="result-answer">
-            //       The trial judge found that 1535709 had breached
-            //       the contract by failing to pay and that Landmark
-            //       was not obligated to continue its work without
-            //       payment. The trial judge found that Landmark's
-            //       work as of the date of abandonment was valued at
-            //       $16,000 and, after deducting the amount of the
-            //       first payment, she determined that 1535709 owed
-            //       Landmark $1,287.50. 1535709's counterclaim was
-            //     </div>
-            //     <div class="result">
-            //       <div class="result-title"><a href="">Landmark II Inc v 1535709 Ontario Limited</a></div>
-            //       <div class="result-answer">
-            //         The trial judge found that 1535709 had breached
-            //         the contract by failing to pay and that Landmark
-            //         was not obligated to continue its work without
-            //         payment. The trial judge found that Landmark's
-            //         work as of the date of abandonment was valued at
-            //         $16,000 and, after deducting the amount of the
-            //         first payment, she determined that 1535709 owed
-            //         Landmark $1,287.50. 1535709's counterclaim was
-            //         dismissed. On appeal, the Divisional Court upheld
-            //       </div>
-            //     </div>
-            //   </div>
-            // </div>
 
 window.onload = function() {
   show_cases(current_contents);
@@ -308,151 +322,3 @@ String.prototype.width = function(font) {
   return w;
 }
 
-/*
-        .row
-          .col-lg-1
-          .col-lg-1.new-folder
-          .col-lg-8
-            .panel.panel-default
-              .panel-heading
-                a(href='#' class='acl' id='acl0' rel='clickover')
-                  i.fa.fa-users.fa-lg
-                h4.panel-title Landmark vs 1535709 Ontario
-              .panel-body
-                div#accordion.panel-group
-                  div#panel2.panel.panel-default
-                    div.panel-heading
-                      h4.panel-title
-                        a(data-toggle='collapse',
-                          data-target='#collapseFour', class='saved-q')
-                          | Why did the judge decide that 1535709 breached its contract with Landmark?
-                    div#collapseFour.panel-collapse.collapse
-                      div.panel-body
-                        .result-title
-                          a(href='http://www.canlii.org/en/on/onca/doc/2011/2011onca567/2011onca567.html' target='blank')
-                            | Landmark II Inc. v. 1535709 Ontario Limited, 2011 ONCA 567 (CanLII): Introduction
-                        .result-answer
-                          | The trial judge found that 1535709 had breached
-                          | the contract by failing to pay and that Landmark
-                          | was not obligated to continue its work without
-                          | payment. The trial judge found that Landmark's
-                          | work as of the date of abandonment was valued at
-                          | $16,000 and, after deducting the amount of the
-                          | first payment, she determined that 1535709 owed
-                          | Landmark $1,287.50. 1535709's counterclaim was
-                        .result
-                          .result-title
-                            a(href='http://www.canlii.org/en/on/onca/doc/2011/2011onca567/2011onca567.html' target='blank')
-                              | Landmark II Inc. v. 1535709 Ontario Limited,
-                              2011 ONCA 567 (CanLII): Analysis
-                          .result-answer
-                            | In this case, the Court found that Landmark had not indicated it was pursuing alternative remedies with the intention of making an election. Further, there was no obligation on the trial judge to provide an election. If Landmark was seeking damages for breach of contract as an alternative to its claim for quantum meruit, it was required to so elect. Without the election, Landmark was not entitled to damages for the breach of contract as an alternative to the trial judge's assessment of damages under the claim for quantum meruit.
-                  div#panel1.panel.panel-default
-                    div.panel-heading
-                      h4.panel-title
-                        a(data-toggle='collapse',
-                          data-target='#collapseThree', class='saved-q')
-                          | What was the result of Landmark vs 1535709 Ontario?
-                    div#collapseThree.panel-collapse.collapse
-                      div.panel-body
-                        .result-title
-                          a(href='')
-                            | Landmark II Inc v 1535709 Ontario Limited
-                        .result-answer
-                          | The trial judge found that 1535709 had breached
-                          | the contract by failing to pay and that Landmark
-                          | was not obligated to continue its work without
-                          | payment. The trial judge found that Landmark's
-                          | work as of the date of abandonment was valued at
-                          | $16,000 and, after deducting the amount of the
-                          | first payment, she determined that 1535709 owed
-                          | Landmark $1,287.50. 1535709's counterclaim was
-*/
-
-
-
-
-
-
-/*
-'<div class="row">'
-  <div class="col-lg-1"></div>
-  <div class="col-lg-1 new-folder"><a id="new-folder" href="" class="btn btn-primary"><i class="fa fa-plus fa-lg"></i>&nbsp;&nbsp;Folder</a></div>
-  <div class="col-lg-8">
-    <div class="panel panel-default">
-      <div class="panel-heading"><a href="#" id="acl0" rel="clickover" class="acl"><i class="fa fa-users fa-lg"></i></a>
-        <h4 class="panel-title">Tercon RFEI</h4>
-      </div>
-      <div class="panel-body">
-        <div id="accordion" class="panel-group">
-          <div id="panel1" class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title"><a data-toggle="collapse" data-target="#collapseOne" class="saved-q">What was the result of Landmark vs Ontario?</a></h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse">
-              <div class="panel-body">
-                <div class="result-title"><a href="">Landmark II Inc v 1535709 Ontario Limited</a></div>
-                <div class="result-answer">
-                  The trial judge found that 1535709 had breached
-                  the contract by failing to pay and that Landmark
-                  was not obligated to continue its work without
-                  payment. The trial judge found that Landmark's
-                  work as of the date of abandonment was valued at
-                  $16,000 and, after deducting the amount of the
-                  first payment, she determined that 1535709 owed
-                  Landmark $1,287.50. 1535709's counterclaim was
-                </div>
-                <div class="result">
-                  <div class="result-title"><a href="">Landmark II Inc v 1535709 Ontario Limited</a></div>
-                  <div class="result-answer">
-                    The trial judge found that 1535709 had breached
-                    the contract by failing to pay and that Landmark
-                    was not obligated to continue its work without
-                    payment. The trial judge found that Landmark's
-                    work as of the date of abandonment was valued at
-                    $16,000 and, after deducting the amount of the
-                    first payment, she determined that 1535709 owed
-                    Landmark $1,287.50. 1535709's counterclaim was
-                    dismissed. On appeal, the Divisional Court upheld
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="panel2" class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title"><a data-toggle="collapse" data-target="#collapse2" class="saved-q">Why did the judge decide that the contract was breached?</a></h4>
-            </div>
-            <div id="collapse2" class="panel-collapse collapse">
-              <div class="panel-body">
-                <div class="result-title"><a href="">Landmark II Inc v 1535709 Ontario Limited</a></div>
-                <div class="result-answer">
-                  The trial judge found that 1535709 had breached
-                  the contract by failing to pay and that Landmark
-                  was not obligated to continue its work without
-                  payment. The trial judge found that Landmark's
-                  work as of the date of abandonment was valued at
-                  $16,000 and, after deducting the amount of the
-                  first payment, she determined that 1535709 owed
-                  Landmark $1,287.50. 1535709's counterclaim was
-                </div>
-                <div class="result">
-                  <div class="result-title"><a href="">Landmark II Inc v 1535709 Ontario Limited</a></div>
-                  <div class="result-answer">
-                    The trial judge found that 1535709 had breached
-                    the contract by failing to pay and that Landmark
-                    was not obligated to continue its work without
-                    payment. The trial judge found that Landmark's
-                    work as of the date of abandonment was valued at
-                    $16,000 and, after deducting the amount of the
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-*/

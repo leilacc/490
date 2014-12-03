@@ -15,6 +15,8 @@ window.onload = function() {
     input[0].value = prev_question; // show prev question
     search();
   }
+
+  store.clear();
 };
 
 window.onpopstate = function() {
