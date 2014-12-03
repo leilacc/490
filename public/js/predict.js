@@ -106,7 +106,7 @@ function get_panel(title, answers) {
                     '</h4>' +
                   '</div>' +
                   '<div id="collapse' + title + '" class="panel-collapse collapse">' +
-                    '<div class="panel-body">';
+                    '<div class="panel-body" onmouseup="highlightSelection()">';
   for (i = 0; i < answers.length; i++) {
     if (i == 0) {
       panel = panel + gen_result(answers[i][0], answers[i][1], highlighted_answer(answers[i][2], keywords), false);
