@@ -121,7 +121,7 @@ function get_panel(title, answers) {
 
 function show_prediction(case_answers, context_answers) {
   prediction = "";
-  prediction = prediction.concat(show_likelihood('74'));
+  prediction = prediction.concat(show_likelihood('68'));
   prediction = prediction.concat(get_panel('Evidence', case_answers));
   prediction = prediction.concat(get_panel('Context', context_answers));
   results.append(prediction);

@@ -5,18 +5,17 @@ html
 body
   .page-wrapper
     include topnav
-    .col-lg-2
-    .col-lg-8
-      .header
-        #path
-        a(href="#",rel="clickover")#new-folder.btn.btn-primary
-          i.fa.fa-plus.fa-lg
-            | &nbsp;&nbsp;Folder
+    section.header-11-sub
       .container
-        .panel-group#saved-cases
+        .row
+          .col-lg-2
+          .col-lg-7
+            #path
+          .col-lg-1
+            a(href="#",rel="clickover")#new-folder
+              i.fa.fa-plus.fa-lg
+        #saved-cases
   include scripts
-  script(type="text/javascript")
-    | var username = #{username}
   script(src='js/bootstrapx-clickover.js')
   script(src='js/show_cases.js')
   script(src='js/add_collaborator.js')

@@ -33,12 +33,12 @@ var get_collaborators = function() {
 };
 
 var get_acl_content = function(id) {
-  var new_collab_form = "<form id='new_collab" + id + "'>" +
+  var new_collab_form = "<form id='new_collab" + id + "' class='new_collab'>" +
                           "<input type='text' class='new_folder' id='new_collab_input" + id +
                             "' placeholder='Add collaborator' autofocus='autofocus'>" +
                         "</form>";
   var current_collabs = "<span class='collaborators' id = 'collab" + id + "'>" + 
                           get_collaborators() +
                         "</span>";
-  return new_collab_form + current_collabs;
+  return current_collabs + new_collab_form;
 }
