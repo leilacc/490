@@ -25,8 +25,7 @@ var search = function() {
     predict(question);
   } else {
     // Get regular answers
-    $.post("/ask", {"question": question, "currentPath[]": []}).done(
-        function(data) {
+    $.post("/ask", {"question": question, "context": keywords_str, "currentPath[]": []}).done(function(data) {
       var question = data['question'];
       var answers = data['answers'];
 

@@ -15,12 +15,13 @@ var requestURL = function(appended) {
     return API + appended;
 }
 
-var ask = function(question, callback) {
+var ask = function(question, context, callback) {
     params.url = requestURL("/instance/507/deepqa/v1/question");
     params.body = {
         question: {
             questionText: question,
-            evidenceRequest: { items: 1, profile: "YES" }
+            evidenceRequest: { items: 1, profile: "YES" },
+            context: context
         }
     }
 
@@ -40,8 +41,8 @@ var askAgainAfterDelay = function(body, delay, callback) {
     }, delay);
 }
 
-var askAndPoll = function(question, numTimes, delay, callback) {
-    ask(question, function(error, body) {
+var askAndPoll = function(question, context, numTimes, delay, callback) {
+    ask(question, context, function(error, body) {
         if (error) {
             callback(error, body);
             return;

@@ -136,6 +136,8 @@ exports = module.exports = function(express, app) {
 var askQuestion = function(req, res) {
     var question = req.param('question');
     var currentPath = req.param('currentPath');
+    var context = req.param('context');
+
     if (!currentPath)
         currentPath = []
 
@@ -152,7 +154,7 @@ var askQuestion = function(req, res) {
     }
 
     var numAnswersReceived = 0;
-    watson.askAndPoll(question, 10, 2000, function(error, watsonResponse) {
+    watson.askAndPoll(question, context, 10, 2000, function(error, watsonResponse) {
         if (error) {
             res.status(500).json({error: error});
             return;

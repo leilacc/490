@@ -88,8 +88,9 @@ function show_likelihood(likelihood) {
           '</div>'
          );
 }
+keywords_str = 'employee employees employer player players wage contract contractors wages pay paid overtime vacation league standard'
+var keywords = str_to_obj_of_words(keywords_str);
 
-var keywords = str_to_obj_of_words('employee employees employer player players wage contract contractors wages pay paid overtime vacation league standard');
 function get_panel(title, answers) {
   panel = '<div class="row">' +
             '<div class="col-lg-2">' +
