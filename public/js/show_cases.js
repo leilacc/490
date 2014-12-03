@@ -172,22 +172,22 @@ var show_cases = function(cases) {
 
     var highlights = store.get('highlights');
     var textContent = generated_case.find('.result-answer');
-    if (textContent.length === 0)
-      continue;
+    if (highlights && textContent.length > 0) {
 
-    for (var i = 0; i < highlights.length; i++) {
-      if (highlights[i] === "")
-          continue;
+      for (var j = 0; j < highlights.length; j++) {
+          if (highlights[j] === "")
+              continue;
 
-      for (var j = 0; j < textContent.length; j++) {
-        var startOffset = textContent[j].innerHTML.indexOf(highlights[i]);
-        if (startOffset !== -1) {
-          var endOffset = startOffset + highlights[i].length;
-          debugger;
-          highlightSelection(textContent[j], startOffset, endOffset);
+          for (var k = 0; k < textContent.length; k++) {
+            var startOffset = textContent[k].innerHTML.indexOf(highlights[j]);
+            if (startOffset !== -1) {
+              // var strongAmount = textContent[j].innerHTML.split("<strong>").length - 1;
+              var endOffset = startOffset + highlights[j].length  //+ strongAmount * ("<strong>".length + "</strong>".length);
+              highlightSelection(textContent[k].childNodes[0], startOffset, endOffset);
+            }
+          }
         }
-      }
-    }   
+    }
 
     var acl = $('#acl' + i);
     acl.clickover({
@@ -225,7 +225,7 @@ var gen_case = function(i, case_to_gen) {
                 '<a data-toggle="collapse" data-target="#' + collapse_div_id + '" class="saved-q">' + case_to_gen.name + '</a></h4>' +
             '</div>' +
             '<div id="' + collapse_div_id + '" class="panel-collapse collapse">' +
-              '<div class="panel-body" onmouseup="highlightSelection()">' +
+              '<div class="panel-body">' +
                 gen_answers(case_to_gen) +
               '</div>' +
             '</div>' + 
@@ -253,7 +253,7 @@ var gen_answers = function(case_to_gen) {
       result += '<div class="result-title"><a href="' + answers[i].url + '">' + answers[i].title + '</a></div>';
     }
     if (answers[i].question) {
-      result += '<div class="result-answer">' + highlighted_answer(answers[i].text, keywords) + '</div>';
+      result += '<div class="result-answer">' + answers[i].text + '</div>';
     } else {
       result += '<div class="result-answer">' + answers[i].text + '</div>';
     }
